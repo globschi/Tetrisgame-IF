@@ -12,88 +12,87 @@ import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
 @SuppressWarnings("serial")
 public class Vorschau extends Canvas {
 
-    private static final Farbe       FUELL_FARBE      = new Farbe(200, 240, 255);
+    private static final Farbe FUELL_FARBE = new Farbe(200, 240, 255);
 
-    private TetrominoTyp             naechsterSpielsteinTyp;
-    private StandardTetrominoFactory tetrominoFactory = new StandardTetrominoFactory();;
+    private TetrominoTyp naechsterSpielsteinTyp;
+    private StandardTetrominoFactory tetrominoFactory = new StandardTetrominoFactory();
 
     public void aktualisieren(TetrominoTyp tetrominoTyp) {
-        this.naechsterSpielsteinTyp = tetrominoTyp;
+	this.naechsterSpielsteinTyp = tetrominoTyp;
     }
 
     public void darstellen() {
 
-        Graphics g = null;
+	Graphics g = null;
 
-        try {
+	try {
 
-            g = getBufferStrategy().getDrawGraphics();
+	    g = getBufferStrategy().getDrawGraphics();
 
-            zeichneVorschauFeld(g);
+	    zeichneVorschauFeld(g);
 
-            if (naechsterSpielsteinTyp == null)
-                return;
+	    if (naechsterSpielsteinTyp == null)
+		return;
 
-            int xKoordinate = 0;
-            int yKoordinate = 0;
+	    int xKoordinate = 0;
+	    int yKoordinate = 0;
 
-            switch (naechsterSpielsteinTyp) {
+	    switch (naechsterSpielsteinTyp) {
 
-                case BLOCK:
-                    xKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 1.5);
-                    yKoordinate = TetrisKonstanten.BLOCK_BREITE * 2;
-                    break;
+		case BLOCK:
+		    xKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 1.5);
+		    yKoordinate = TetrisKonstanten.BLOCK_BREITE * 2;
+		    break;
 
-                case L:
-                case UMGEDREHTES_Z:
-                    xKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 1.5);
-                    yKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 1.5);
-                    break;
+		case L:
+		case UMGEDREHTES_Z:
+		    xKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 1.5);
+		    yKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 1.5);
+		    break;
 
-                case UMGEDREHTES_L:
-                    xKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 2.5);
-                    yKoordinate = TetrisKonstanten.BLOCK_BREITE;
-                    break;
+		case UMGEDREHTES_L:
+		    xKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 2.5);
+		    yKoordinate = TetrisKonstanten.BLOCK_BREITE;
+		    break;
 
-                case LANGER:
-                    xKoordinate = TetrisKonstanten.BLOCK_BREITE * 2;
-                    yKoordinate = TetrisKonstanten.BLOCK_BREITE;
-                    break;
+		case LANGER:
+		    xKoordinate = TetrisKonstanten.BLOCK_BREITE * 2;
+		    yKoordinate = TetrisKonstanten.BLOCK_BREITE;
+		    break;
 
-                case Z:
-                    xKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 2.5);
-                    yKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 1.5);
-                    break;
+		case Z:
+		    xKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 2.5);
+		    yKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 1.5);
+		    break;
 
-                case T:
-                    xKoordinate = TetrisKonstanten.BLOCK_BREITE * 2;
-                    yKoordinate = TetrisKonstanten.BLOCK_BREITE * 2;
-                    break;
+		case T:
+		    xKoordinate = TetrisKonstanten.BLOCK_BREITE * 2;
+		    yKoordinate = TetrisKonstanten.BLOCK_BREITE * 2;
+		    break;
 
-                default:
-                    throw new IllegalStateException("TetrominoTyp " + naechsterSpielsteinTyp + " ist nicht bekannt!");
-            }
+		default:
+		    throw new IllegalStateException("TetrominoTyp " + naechsterSpielsteinTyp + " ist nicht bekannt!");
+	    }
 
-            TetrominoSpielstein naechsterSpielstein = tetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp,
-                    xKoordinate, yKoordinate);
+	    TetrominoSpielstein naechsterSpielstein = tetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp, xKoordinate, yKoordinate);
 
-            for (TetrominoSpielstein block : naechsterSpielstein.getViertelBloecke())
-                block.setFuellFarbe(FUELL_FARBE);
+	    for (TetrominoSpielstein block : naechsterSpielstein.getViertelBloecke())
+		block.setFuellFarbe(FUELL_FARBE);
 
-            naechsterSpielstein.zeichnen(g);
+	    naechsterSpielstein.zeichnen(g);
 
-        } finally {
-            if (g != null)
-                g.dispose();
-        }
+	} finally {
+	    if (g != null)
+		g.dispose();
+	}
 
-        getBufferStrategy().show();
+	getBufferStrategy().show();
     }
 
     private void zeichneVorschauFeld(Graphics g) {
 
-        /* Hintergrund des Feldes */
-        g.setColor(TetrisKonstanten.VORDERGRUND.konvertiereZuColor());
-        g.fillRect(0, 0, TetrisKonstanten.VORSCHAU_BREITE, TetrisKonstanten.VORSCHAU_HOEHE);
+	/* Hintergrund des Feldes */
+	g.setColor(TetrisKonstanten.VORDERGRUND.konvertiereZuColor());
+	g.fillRect(0, 0, TetrisKonstanten.VORSCHAU_BREITE, TetrisKonstanten.VORSCHAU_HOEHE);
     }
 }
