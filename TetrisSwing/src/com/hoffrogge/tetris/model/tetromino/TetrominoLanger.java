@@ -46,6 +46,7 @@ public class TetrominoLanger extends Tetromino {
 
 	    vierterBlock.setX(vierterBlock.getX() + TetrisKonstanten.BLOCK_BREITE * 2);
 	    vierterBlock.setY(vierterBlock.getY() - TetrisKonstanten.BLOCK_BREITE * 2);
+
 	} else {
 
 	    ersterBlock.setX(ersterBlock.getX() + TetrisKonstanten.BLOCK_BREITE);
@@ -56,6 +57,7 @@ public class TetrominoLanger extends Tetromino {
 
 	    vierterBlock.setX(vierterBlock.getX() - TetrisKonstanten.BLOCK_BREITE * 2);
 	    vierterBlock.setY(vierterBlock.getY() + TetrisKonstanten.BLOCK_BREITE * 2);
+
 	}
     }
 }

@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.TetrisMusikSpieler;
 import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
+import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 import com.hoffrogge.tetris.view.Spielfeld;
 import com.hoffrogge.tetris.view.Spielfenster;
 import com.hoffrogge.tetris.view.TetrisKeyListener;
@@ -212,5 +213,14 @@ public class Spiel implements Runnable {
 
     public boolean isPause() {
 	return isPause;
+    }
+
+    /**
+     * Prueft, ob der Spielstein in das aktuelle Spiel passt, das heisst, ob kein
+     * anderer Stein oder eine Wand im Weg ist.
+     */
+    public boolean passtGedrehterSpielstein(TetrominoSpielstein spielstein) {
+	// TODO Auto-generated method stub
+	return true;
     }
 }

@@ -112,7 +112,7 @@ public class Spielfenster extends JFrame {
 	lblPauseMitP.setBounds(460, 780, 150, 25);
 	getContentPane().add(lblPauseMitP);
 
-	JLabel lblDrehenMitQ = new JLabel("Drehen mit Q");
+	JLabel lblDrehenMitQ = new JLabel("Drehen mit Q, E");
 	lblDrehenMitQ.setHorizontalAlignment(SwingConstants.RIGHT);
 	lblDrehenMitQ.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
 	lblDrehenMitQ.setFont(steuerungFont);

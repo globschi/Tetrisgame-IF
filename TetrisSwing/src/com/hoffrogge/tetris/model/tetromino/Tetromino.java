@@ -22,8 +22,8 @@ public abstract class Tetromino implements TetrominoSpielstein {
 
     @Override
     public void setMittelpunkt(Punkt mittelpunkt) {
-	this.x = mittelpunkt.getX();
-	this.y = mittelpunkt.getY();
+	x = mittelpunkt.getX();
+	y = mittelpunkt.getY();
     }
 
     @Override
@@ -53,7 +53,7 @@ public abstract class Tetromino implements TetrominoSpielstein {
 
     @Override
     public void setDurchmesser(int d) {
-	this.durchmesser = d;
+	durchmesser = d;
     }
 
     @Override
@@ -63,7 +63,7 @@ public abstract class Tetromino implements TetrominoSpielstein {
 
     @Override
     public void setLinienFarbe(Farbe farbe) {
-	this.linienFarbe = farbe;
+	linienFarbe = farbe;
     }
 
     @Override
@@ -293,7 +293,9 @@ public abstract class Tetromino implements TetrominoSpielstein {
     /* im Uhrzeigersinn */
     @Override
     public void rotiereNachRechts() {
-	throw new UnsupportedOperationException("Rechts herum rotieren wurde noch nicht implementiert!");
+	rotiereNachLinks();
+	rotiereNachLinks();
+	rotiereNachLinks();
     }
 
     Punkt findePunkt(Punkt[][] tetrominoMatrix, int i, int j) {
@@ -339,10 +341,8 @@ public abstract class Tetromino implements TetrominoSpielstein {
 	 */
 	List<TetrominoSpielstein> andereViertelBloecke = andererSpielstein.getViertelBloecke();
 
-	for (TetrominoSpielstein block : viertelBloecke) {
-
+	for (TetrominoSpielstein block : viertelBloecke)
 	    block.setLinienFarbe(linienFarbe);
-	}
 
 	/* Es muss jeweils genau vier geben! */
 	if (viertelBloecke.size() != 4 || andereViertelBloecke.size() != 4)

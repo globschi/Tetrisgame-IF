@@ -67,7 +67,31 @@ public class TetrisKeyListener implements KeyListener {
 		if (spiel.isPause())
 		    return;
 
+		/*
+		 * Spielstein drehen und pruefen, ob der gedrehte Spielstein Platz hat. Wenn
+		 * nein, zurueckdrehen.
+		 */
 		fallenderSpielstein.rotiereNachLinks();
+
+		if (!spiel.passtGedrehterSpielstein(fallenderSpielstein))
+		    fallenderSpielstein.rotiereNachRechts();
+
+		break;
+
+	    case KeyEvent.VK_E:
+
+		if (spiel.isPause())
+		    return;
+
+		/*
+		 * Spielstein drehen und pruefen, ob der gedrehte Spielstein Platz hat. Wenn
+		 * nein, zurueckdrehen.
+		 */
+		fallenderSpielstein.rotiereNachRechts();
+
+		if (!spiel.passtGedrehterSpielstein(fallenderSpielstein))
+		    fallenderSpielstein.rotiereNachLinks();
+
 		break;
 
 	    case KeyEvent.VK_P:
