@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import com.hoffrogge.tetris.model.Farbe;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
-import com.hoffrogge.tetris.model.tetromino.StandardTetrominoFactory;
+import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
 
@@ -15,7 +15,11 @@ public class Vorschau extends Canvas {
     private static final Farbe FUELL_FARBE = new Farbe(200, 240, 255);
 
     private TetrominoTyp naechsterSpielsteinTyp;
-    private StandardTetrominoFactory tetrominoFactory = new StandardTetrominoFactory();
+    private TetrominoFactory tetrominoFactory;
+
+    public Vorschau(TetrominoFactory tetrominoFactory) {
+	this.tetrominoFactory = tetrominoFactory;
+    }
 
     public void aktualisieren(TetrominoTyp tetrominoTyp) {
 	this.naechsterSpielsteinTyp = tetrominoTyp;

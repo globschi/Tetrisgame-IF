@@ -16,206 +16,203 @@ import com.hoffrogge.tetris.model.Spielfeld;
 import com.hoffrogge.tetris.model.TetrisKeyListener;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.TetrisMusikSpieler;
+import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 import com.hoffrogge.tetris.view.Spielfenster;
 import com.hoffrogge.tetris.view.Vorschau;
 
 public class Spiel implements Runnable {
 
-	private Spielfeld spielfeld;
-	private Vorschau vorschau;
+    private Spielfeld spielfeld;
+    private Vorschau vorschau;
 
-	private boolean spielLaeuft;
-	private Thread spielThread;
-	private Thread soundThread;
+    private boolean spielLaeuft;
+    private Thread spielThread;
+    private Thread soundThread;
 
-	private JLabel punkteWertLabel;
-	private JLabel levelWertLabel;
-	private JLabel reihenWertLabel;
-	private JLabel highscoreLabel;
+    private JLabel punkteWertLabel;
+    private JLabel levelWertLabel;
+    private JLabel reihenWertLabel;
+    private JLabel highscoreLabel;
 
-	private TetrisKeyListener tetrisKeyListener;
+    private TetrisKeyListener tetrisKeyListener;
 
-	private int level = 1;
-	private int punkte = 0;
-	private int highscore = 0;
-	private int reihen = 0;
-	private boolean isPause;
+    private int level = 1;
+    private int punkte = 0;
+    private int highscore = 0;
+    private int reihen = 0;
+    private boolean isPause;
 
-	public Spiel(Spielfenster spielfenster) {
+    public Spiel(Spielfenster spielfenster, TetrominoFactory tetrominoFactory) {
 
-		spielfeld = spielfenster.getSpielfeld();
-		vorschau = spielfenster.getVorschau();
-		tetrisKeyListener = spielfenster.getTetrisKeyListener();
+	spielfeld = spielfenster.getSpielfeld();
+	vorschau = spielfenster.getVorschau();
+	tetrisKeyListener = spielfenster.getTetrisKeyListener();
 
-		/* Das koennte man mit einem Oberserver viel schoener loesen */
-		tetrisKeyListener.setSpiel(this);
+	/* Das koennte man mit einem Oberserver viel schoener loesen */
+	tetrisKeyListener.setSpiel(this);
 
-		spielfeld.setSpiel(this);
+	spielfeld.setSpiel(this);
 
-		punkteWertLabel = spielfenster.getPunkteWertLabel();
-		levelWertLabel = spielfenster.getLevelWertLabel();
-		reihenWertLabel = spielfenster.getReihenWertLabel();
-		highscoreLabel = spielfenster.getHighscoreLabel();
+	punkteWertLabel = spielfenster.getPunkteWertLabel();
+	levelWertLabel = spielfenster.getLevelWertLabel();
+	reihenWertLabel = spielfenster.getReihenWertLabel();
+	highscoreLabel = spielfenster.getHighscoreLabel();
 
-		spielLaeuft = true;
+	spielLaeuft = true;
+    }
+
+    @Override
+    public void run() {
+
+	while (spielLaeuft) {
+
+	    punkteLevelReihenAktualisieren();
+
+	    spielfeld.spielerEingabenVerarbeiten();
+
+	    if (!isPause())
+		spielfeld.aktualisieren();
+
+	    vorschau.aktualisieren(spielfeld.getNaechsterSpielsteinTyp());
+
+	    spielfeld.darstellen();
+	    vorschau.darstellen();
+
+	    if (spielfeld.istSpielfeldVoll()) {
+
+		beendeSpiel();
+		continue;
+	    }
+
+	    try {
+
+		int spielBeschleuniger = (level - 1) * 50;
+
+		int spielGeschwindigkeit = Math.max(TetrisKonstanten.SPIEL_GESCHWINDIGKEIT - spielBeschleuniger, TetrisKonstanten.SPIEL_GESCHWINDIGKEIT_MIN);
+
+		Thread.sleep(spielGeschwindigkeit);
+
+	    } catch (InterruptedException e) {
+		Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+		Thread.currentThread().interrupt();
+	    }
 	}
 
-	@Override
-	public void run() {
+    }
 
-		while (spielLaeuft) {
+    public void starteSpiel() {
 
-			punkteLevelReihenAktualisieren();
+	highscoreLaden();
 
-			spielfeld.spielerEingabenVerarbeiten();
+	spielThread = new Thread(this);
+	spielThread.start();
 
-			if (!isPause())
-				spielfeld.aktualisieren();
+	if (TetrisKonstanten.MUSIK_AN) {
 
-			vorschau.aktualisieren(spielfeld.getNaechsterSpielsteinTyp());
+	    soundThread = new Thread(new TetrisMusikSpieler());
+	    soundThread.start();
+	}
+    }
 
-			spielfeld.darstellen();
-			vorschau.darstellen();
+    private void beendeSpiel() {
 
-			if (spielfeld.istSpielfeldVoll()) {
+	spielLaeuft = false;
 
-				beendeSpiel();
-				continue;
-			}
+	try {
 
-			try {
+	    if (TetrisKonstanten.MUSIK_AN)
+		soundThread.join();
 
-				int spielBeschleuniger = (level - 1) * 50;
-
-				int spielGeschwindigkeit = Math.max(TetrisKonstanten.SPIEL_GESCHWINDIGKEIT - spielBeschleuniger,
-						TetrisKonstanten.SPIEL_GESCHWINDIGKEIT_MIN);
-
-				Thread.sleep(spielGeschwindigkeit);
-
-			} catch (InterruptedException e) {
-				Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-				Thread.currentThread().interrupt();
-			}
-		}
-
+	} catch (InterruptedException e) {
+	    Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+	    Thread.currentThread().interrupt();
 	}
 
-	public void starteSpiel() {
+	highscoreSpeichern();
+    }
 
-		highscoreLaden();
+    public void erhoehePunkte() {
 
-		spielThread = new Thread(this);
-		spielThread.start();
+	if (tetrisKeyListener.isBeschleunigterFall())
+	    punkte += level * 3 + 21;
+	else
+	    punkte += level * 3 + 3;
 
-		if (TetrisKonstanten.MUSIK_AN) {
+	pruefeUndSetzeLevel();
+    }
 
-			soundThread = new Thread(new TetrisMusikSpieler());
-			soundThread.start();
-		}
+    public void erhoeheReihen() {
+	reihen++;
+    }
+
+    private void pruefeUndSetzeLevel() {
+
+	if (reihen / level >= 10)
+	    level++;
+    }
+
+    private void punkteLevelReihenAktualisieren() {
+
+	levelWertLabel.setText(String.valueOf(level));
+	punkteWertLabel.setText(String.valueOf(punkte));
+	reihenWertLabel.setText(String.valueOf(reihen));
+
+	highscore = Math.max(punkte, highscore);
+	highscoreLabel.setText(String.valueOf(highscore));
+    }
+
+    private void highscoreSpeichern() {
+
+	File highscoreCsv = new File("highscore.csv");
+
+	if (!highscoreCsv.exists())
+	    try {
+		highscoreCsv.createNewFile();
+	    } catch (IOException e) {
+		Logger.getGlobal().log(Level.WARNING, "Highscore-Datei konnte nicht angelegt werden! " + e.getMessage(), e);
+		e.printStackTrace();
+	    }
+
+	try (BufferedWriter bw = new BufferedWriter(new FileWriter("highscore.csv"))) {
+
+	    int aktuellerHighscore = Math.max(punkte, highscore);
+	    String content = String.valueOf(aktuellerHighscore);
+
+	    bw.write(content);
+
+	} catch (IOException e) {
+	    Logger.getGlobal().log(Level.WARNING, "Konnte Highscore nicht speichern! " + e.getMessage(), e);
+	    e.printStackTrace();
 	}
+    }
 
-	private void beendeSpiel() {
+    private void highscoreLaden() {
 
-		spielLaeuft = false;
+	File highscoreCsv = new File("highscore.csv");
 
-		try {
+	if (!highscoreCsv.exists())
+	    return;
 
-			if (TetrisKonstanten.MUSIK_AN)
-				soundThread.join();
+	try (BufferedReader br = new BufferedReader(new FileReader("highscore.csv"))) {
 
-		} catch (InterruptedException e) {
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			Thread.currentThread().interrupt();
-		}
+	    String line = br.readLine();
 
-		highscoreSpeichern();
+	    highscore = Integer.parseInt(line);
+
+	} catch (FileNotFoundException e) {
+	    Logger.getGlobal().log(Level.WARNING, "Konnte Highscore-Datei nicht finden! " + e.getMessage(), e);
+	    e.printStackTrace();
+	} catch (IOException | NumberFormatException e) {
+	    Logger.getGlobal().log(Level.WARNING, "Konnte Highscore nicht lesen! " + e.getMessage(), e);
+	    e.printStackTrace();
 	}
+    }
 
-	public void erhoehePunkte() {
+    public void togglePause() {
+	isPause = !isPause;
+    }
 
-		if (tetrisKeyListener.isBeschleunigterFall())
-			punkte += level * 3 + 21;
-		else
-			punkte += level * 3 + 3;
-
-		pruefeUndSetzeLevel();
-	}
-
-	public void erhoeheReihen() {
-		reihen++;
-	}
-
-	private void pruefeUndSetzeLevel() {
-
-		if (reihen / level >= 10)
-			level++;
-	}
-
-	private void punkteLevelReihenAktualisieren() {
-
-		levelWertLabel.setText(String.valueOf(level));
-		punkteWertLabel.setText(String.valueOf(punkte));
-		reihenWertLabel.setText(String.valueOf(reihen));
-
-		highscore = Math.max(punkte, highscore);
-		highscoreLabel.setText(String.valueOf(highscore));
-	}
-
-	private void highscoreSpeichern() {
-
-		File highscoreCsv = new File("highscore.csv");
-
-		if (!highscoreCsv.exists()) {
-
-			try {
-				highscoreCsv.createNewFile();
-			} catch (IOException e) {
-				Logger.getGlobal().log(Level.WARNING, "Highscore-Datei konnte nicht angelegt werden! " + e.getMessage(),
-						e);
-				e.printStackTrace();
-			}
-		}
-
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter("highscore.csv"))) {
-
-			int aktuellerHighscore = Math.max(punkte, highscore);
-			String content = String.valueOf(aktuellerHighscore);
-
-			bw.write(content);
-
-		} catch (IOException e) {
-			Logger.getGlobal().log(Level.WARNING, "Konnte Highscore nicht speichern! " + e.getMessage(), e);
-			e.printStackTrace();
-		}
-	}
-
-	private void highscoreLaden() {
-
-		File highscoreCsv = new File("highscore.csv");
-
-		if (!highscoreCsv.exists())
-			return;
-
-		try (BufferedReader br = new BufferedReader(new FileReader("highscore.csv"))) {
-
-			String line = br.readLine();
-
-			highscore = Integer.parseInt(line);
-
-		} catch (FileNotFoundException e) {
-			Logger.getGlobal().log(Level.WARNING, "Konnte Highscore-Datei nicht finden! " + e.getMessage(), e);
-			e.printStackTrace();
-		} catch (IOException | NumberFormatException e) {
-			Logger.getGlobal().log(Level.WARNING, "Konnte Highscore nicht lesen! " + e.getMessage(), e);
-			e.printStackTrace();
-		}
-	}
-
-	public void togglePause() {
-		isPause = !isPause;
-	}
-
-	public boolean isPause() {
-		return isPause;
-	}
+    public boolean isPause() {
+	return isPause;
+    }
 }
