@@ -13,22 +13,22 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class TetrisMusikSpieler implements Runnable {
 
-	@Override
-	public void run() {
+    @Override
+    public void run() {
 
-		ClassLoader classLoader = getClass().getClassLoader();
-		/* Lizenz: https://creativecommons.org/licenses/by-nc-sa/3.0/ */
-		InputStream midiStream = classLoader.getResourceAsStream("Tetris_-_Theme_A_by_Gori_Fater.mid");
+	ClassLoader classLoader = getClass().getClassLoader();
+	/* Lizenz: https://creativecommons.org/licenses/by-nc-sa/3.0/ */
+	InputStream midiStream = classLoader.getResourceAsStream("Tetris_-_Theme_A_by_Gori_Fater.mid");
 
-		try (AudioInputStream ais = AudioSystem.getAudioInputStream(midiStream)) {
+	try (AudioInputStream ais = AudioSystem.getAudioInputStream(midiStream)) {
 
-			Clip clip = AudioSystem.getClip();
-			clip.open(ais);
+	    Clip clip = AudioSystem.getClip();
+	    clip.open(ais);
 
-			clip.start();
+	    clip.start();
 
-		} catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
-			Logger.getGlobal().log(Level.WARNING, e.getMessage(), e);
-		}
+	} catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+	    Logger.getGlobal().log(Level.WARNING, e.getMessage(), e);
 	}
+    }
 }
