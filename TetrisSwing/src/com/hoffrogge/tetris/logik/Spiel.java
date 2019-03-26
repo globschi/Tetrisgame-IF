@@ -12,12 +12,12 @@ import java.util.logging.Logger;
 
 import javax.swing.JLabel;
 
-import com.hoffrogge.tetris.model.Spielfeld;
-import com.hoffrogge.tetris.model.TetrisKeyListener;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.TetrisMusikSpieler;
 import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
+import com.hoffrogge.tetris.view.Spielfeld;
 import com.hoffrogge.tetris.view.Spielfenster;
+import com.hoffrogge.tetris.view.TetrisKeyListener;
 import com.hoffrogge.tetris.view.Vorschau;
 
 public class Spiel implements Runnable {
@@ -67,8 +67,6 @@ public class Spiel implements Runnable {
 	while (spielLaeuft) {
 
 	    punkteLevelReihenAktualisieren();
-
-	    spielfeld.spielerEingabenVerarbeiten();
 
 	    if (!isPause())
 		spielfeld.aktualisieren();

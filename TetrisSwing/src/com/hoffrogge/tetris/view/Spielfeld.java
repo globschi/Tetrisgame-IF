@@ -1,4 +1,4 @@
-package com.hoffrogge.tetris.model;
+package com.hoffrogge.tetris.view;
 
 import java.awt.Canvas;
 import java.awt.Font;
@@ -12,6 +12,9 @@ import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.hoffrogge.tetris.logik.Spiel;
+import com.hoffrogge.tetris.model.Farbe;
+import com.hoffrogge.tetris.model.GeometrischeFigur;
+import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
@@ -40,10 +43,6 @@ public class Spielfeld extends Canvas {
 	this.spiel = spiel;
     }
 
-    public void spielerEingabenVerarbeiten() {
-	/* Hier passiert noch nichts. */
-    }
-
     public void aktualisieren() {
 
 	loescheVolleReihen();
@@ -69,7 +68,6 @@ public class Spielfeld extends Canvas {
 	}
     }
 
-    /* Baut hier eure eigenen Spielsteine ein */
     private TetrominoSpielstein neuerZufaelligerSpielstein() {
 
 	TetrominoSpielstein tetromino = tetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp);
