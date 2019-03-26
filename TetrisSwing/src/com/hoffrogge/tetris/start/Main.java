@@ -9,7 +9,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-	/* Diese Factory ist dafür zuständig, Spielsteine zu generieren. */
+	/*
+	 * Diese Factory ist dafür zuständig, Spielsteine zu generieren. Mit deiner
+	 * eigenen Factory kannst du hier deine eigenen Spielsteine einbauen.
+	 */
 	TetrominoFactory tetrominoFactory = new StandardTetrominoFactory();
 
 	/*
@@ -21,7 +24,7 @@ public class Main {
 
 	/*
 	 * Das Spiel enthält alles an Logik, die es braucht, z. B. das Drehen von
-	 * Spielsteine oder die Berechnung von Punkten. Das Spiel kann nichts
+	 * Spielsteinen oder die Berechnung von Punkten. Das Spiel kann nichts
 	 * darstellen, das ist Aufgabe des Spielfensters. Das Spiel kann nur dem
 	 * Spielfenster Informationen geben, die das Spielfenster dann darstellt.
 	 */
