@@ -77,7 +77,7 @@ public class Spielfeld extends Canvas {
 	return tetromino;
     }
 
-    public void darstellen() {
+    public void zeichnen() {
 
 	Graphics g = null;
 
@@ -119,7 +119,7 @@ public class Spielfeld extends Canvas {
 
 	/* Hintergrund des Spielfeldes */
 	g.setColor(TetrisKonstanten.VORDERGRUND.konvertiereZuColor());
-	g.fillRect(0, 0, TetrisKonstanten.SPIELFELD_BREITE, TetrisKonstanten.SPIELFELD_HOEHE);
+	g.fillRect(TetrisKonstanten.SPIELFELD_X0, TetrisKonstanten.SPIELFELD_Y0, TetrisKonstanten.SPIELFELD_BREITE, TetrisKonstanten.SPIELFELD_HOEHE);
     }
 
     private void zeichnePauseSchriftzug(Graphics g) {

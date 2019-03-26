@@ -78,7 +78,7 @@ public class TetrisKeyListener implements KeyListener {
 		break;
 	}
 
-	spielfeld.darstellen();
+	spielfeld.zeichnen();
     }
 
     @Override

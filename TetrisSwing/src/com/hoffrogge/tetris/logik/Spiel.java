@@ -74,8 +74,8 @@ public class Spiel implements Runnable {
 		vorschau.aktualisieren(spielfeld.getNaechsterSpielsteinTyp());
 	    }
 
-	    spielfeld.darstellen();
-	    vorschau.darstellen();
+	    spielfeld.zeichnen();
+	    vorschau.zeichnen();
 
 	    if (spielfeld.istSpielfeldVoll()) {
 
@@ -96,7 +96,6 @@ public class Spiel implements Runnable {
 		Thread.currentThread().interrupt();
 	    }
 	}
-
     }
 
     public void starteSpiel() {

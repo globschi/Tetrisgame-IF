@@ -11,6 +11,8 @@ public class TetrisKonstanten {
 
     public static final int ABSTAND = BLOCK_BREITE / 8;
 
+    public static final int SPIELFELD_X0 = 0;
+    public static final int SPIELFELD_Y0 = 0;
     public static final int SPIELFELD_BREITE = BLOCK_BREITE * 10;
     public static final int SPIELFELD_HOEHE = BLOCK_BREITE * 20;
     public static final int SPIELFELD_POS_X = ABSTAND;
@@ -41,4 +43,5 @@ public class TetrisKonstanten {
     public static final Farbe AKZENT = new Farbe(200, 70, 48);
 
     public static final Farbe TETROMINO_FARBE_BLOCK = new Farbe(200, 70, 48);
+
 }

@@ -25,7 +25,7 @@ public class Vorschau extends Canvas {
 	this.naechsterSpielsteinTyp = tetrominoTyp;
     }
 
-    public void darstellen() {
+    public void zeichnen() {
 
 	Graphics g = null;
 
