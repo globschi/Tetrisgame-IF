@@ -66,7 +66,7 @@ public class Spiel implements Runnable {
 
 	while (spielLaeuft) {
 
-	    punkteLevelReihenAktualisieren();
+	    punkteUndLevelUndReihenAktualisieren();
 
 	    if (!isPause())
 		spielfeld.aktualisieren();
@@ -149,7 +149,7 @@ public class Spiel implements Runnable {
 	    level++;
     }
 
-    private void punkteLevelReihenAktualisieren() {
+    private void punkteUndLevelUndReihenAktualisieren() {
 
 	levelWertLabel.setText(String.valueOf(level));
 	punkteWertLabel.setText(String.valueOf(punkte));
