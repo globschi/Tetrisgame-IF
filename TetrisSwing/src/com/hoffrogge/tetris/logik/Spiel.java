@@ -68,10 +68,11 @@ public class Spiel implements Runnable {
 
 	    punkteUndLevelUndReihenAktualisieren();
 
-	    if (!isPause())
-		spielfeld.aktualisieren();
+	    if (!isPause()) {
 
-	    vorschau.aktualisieren(spielfeld.getNaechsterSpielsteinTyp());
+		spielfeld.aktualisieren();
+		vorschau.aktualisieren(spielfeld.getNaechsterSpielsteinTyp());
+	    }
 
 	    spielfeld.darstellen();
 	    vorschau.darstellen();
