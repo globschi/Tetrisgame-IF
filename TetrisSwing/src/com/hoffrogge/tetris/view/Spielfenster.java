@@ -13,16 +13,20 @@ import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 @SuppressWarnings("serial")
 public class Spielfenster extends JFrame {
 
-    private Spielfeld         spielfeld;
-    private Vorschau          vorschau;
-    private JLabel            levelWertLabel;
-    private JLabel            reihenWertLabel;
-    private JLabel            punkteWertLabel;
+    private Spielfeld spielfeld;
+    private Vorschau  vorschau;
+    private JLabel    levelWertLabel;
+    private JLabel    reihenWertLabel;
+    private JLabel    punkteWertLabel;
 
-    private TetrisKeyListener tetrisKeyListener;
-    private JLabel            highscoreWertLabel;
+    private JLabel    highscoreWertLabel;
 
-    public Spielfenster(TetrominoFactory tetrominoFactory) {
+    public Spielfenster(Spielfeld spielfeld, TetrominoFactory tetrominoFactory, TetrisKeyListener tetrisKeyListener) {
+
+        this.spielfeld = spielfeld;
+        getContentPane().add(spielfeld);
+
+        addKeyListener(tetrisKeyListener);
 
         getContentPane().setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
 
@@ -34,15 +38,6 @@ public class Spielfenster extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         getContentPane().setLayout(null);
-
-        spielfeld = new Spielfeld(tetrominoFactory);
-        spielfeld.setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
-        spielfeld.setBounds(TetrisKonstanten.SPIELFELD_POS_X, TetrisKonstanten.SPIELFELD_POS_Y, TetrisKonstanten.SPIELFELD_BREITE,
-                TetrisKonstanten.SPIELFELD_HOEHE);
-        getContentPane().add(spielfeld);
-
-        tetrisKeyListener = new TetrisKeyListener(spielfeld);
-        addKeyListener(tetrisKeyListener);
 
         vorschau = new Vorschau(tetrominoFactory);
         vorschau.setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
@@ -150,10 +145,6 @@ public class Spielfenster extends JFrame {
 
     public JLabel getPunkteWertLabel() {
         return punkteWertLabel;
-    }
-
-    public TetrisKeyListener getTetrisKeyListener() {
-        return tetrisKeyListener;
     }
 
     public JLabel getHighscoreLabel() {

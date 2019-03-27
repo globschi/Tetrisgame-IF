@@ -43,11 +43,11 @@ public class Spiel implements Runnable {
     private int               reihen    = 0;
     private boolean           isPause;
 
-    public Spiel(Spielfenster spielfenster, TetrominoFactory tetrominoFactory) {
+    public Spiel(Spielfenster spielfenster, TetrominoFactory tetrominoFactory, TetrisKeyListener tetrisKeyListener) {
 
         spielfeld = spielfenster.getSpielfeld();
         vorschau = spielfenster.getVorschau();
-        tetrisKeyListener = spielfenster.getTetrisKeyListener();
+        this.tetrisKeyListener = tetrisKeyListener;
 
         /* Das koennte man mit einem Oberserver viel schoener loesen */
         tetrisKeyListener.setSpiel(this);

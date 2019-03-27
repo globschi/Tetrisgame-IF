@@ -112,6 +112,7 @@ public class TetrisKeyListener implements KeyListener {
             isBeschleunigterFall = false;
     }
 
+    // TODO das gehört ins Spiel, nicht in den Listener
     public boolean isBeschleunigterFall() {
         return isBeschleunigterFall;
     }
