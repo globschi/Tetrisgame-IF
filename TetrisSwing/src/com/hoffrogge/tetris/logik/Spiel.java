@@ -225,4 +225,16 @@ public class Spiel implements Runnable {
         // TODO Auto-generated method stub
         return true;
     }
+
+    public TetrominoSpielstein getFallenderSpielstein() {
+        return spielfeld.getFallenderSpielstein();
+    }
+
+    public void aktualisiereSpielfeld() {
+        spielfeld.aktualisieren();
+    }
+
+    public void zeichneSpielfeld() {
+        spielfeld.zeichnen();
+    }
 }

@@ -8,12 +8,10 @@ import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 
 public class TetrisKeyListener implements KeyListener {
 
-    private Spielfeld spielfeld;
-    private Spiel     spiel;
+    private Spiel spiel;
 
-    public TetrisKeyListener(Spiel spiel, Spielfeld spielfeld) {
+    public TetrisKeyListener(Spiel spiel) {
         this.spiel = spiel;
-        this.spielfeld = spielfeld;
     }
 
     @Override
@@ -24,7 +22,7 @@ public class TetrisKeyListener implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
-        TetrominoSpielstein fallenderSpielstein = spielfeld.getFallenderSpielstein();
+        TetrominoSpielstein fallenderSpielstein = spiel.getFallenderSpielstein();
 
         if (fallenderSpielstein == null)
             return;
@@ -55,7 +53,7 @@ public class TetrisKeyListener implements KeyListener {
                     return;
 
                 spiel.setBeschleunigterFall(true);
-                spielfeld.aktualisieren();
+                spiel.aktualisiereSpielfeld();
                 break;
 
             case KeyEvent.VK_Q:
@@ -98,7 +96,11 @@ public class TetrisKeyListener implements KeyListener {
                 break;
         }
 
-        spielfeld.zeichnen();
+        /*
+         * Nach einer Tastatureingabe soll sofort die Änderung gezeichnet
+         * werden.
+         */
+        spiel.zeichneSpielfeld();
     }
 
     @Override
