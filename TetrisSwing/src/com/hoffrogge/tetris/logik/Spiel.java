@@ -18,39 +18,33 @@ import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 import com.hoffrogge.tetris.view.Spielfeld;
 import com.hoffrogge.tetris.view.Spielfenster;
-import com.hoffrogge.tetris.view.TetrisKeyListener;
 import com.hoffrogge.tetris.view.Vorschau;
 
 public class Spiel implements Runnable {
 
-    private Spielfeld         spielfeld;
-    private Vorschau          vorschau;
+    private Spielfeld spielfeld;
+    private Vorschau  vorschau;
 
-    private boolean           spielLaeuft;
-    private Thread            spielThread;
-    private Thread            soundThread;
+    private boolean   spielLaeuft;
+    private Thread    spielThread;
+    private Thread    soundThread;
 
-    private JLabel            punkteWertLabel;
-    private JLabel            levelWertLabel;
-    private JLabel            reihenWertLabel;
-    private JLabel            highscoreLabel;
+    private JLabel    punkteWertLabel;
+    private JLabel    levelWertLabel;
+    private JLabel    reihenWertLabel;
+    private JLabel    highscoreLabel;
 
-    private TetrisKeyListener tetrisKeyListener;
+    private int       level     = 1;
+    private int       punkte    = 0;
+    private int       highscore = 0;
+    private int       reihen    = 0;
+    private boolean   isPause;
+    private boolean   isBeschleunigterFall;
 
-    private int               level     = 1;
-    private int               punkte    = 0;
-    private int               highscore = 0;
-    private int               reihen    = 0;
-    private boolean           isPause;
-
-    public Spiel(Spielfenster spielfenster, TetrominoFactory tetrominoFactory, TetrisKeyListener tetrisKeyListener) {
+    public Spiel(Spielfenster spielfenster, TetrominoFactory tetrominoFactory) {
 
         spielfeld = spielfenster.getSpielfeld();
         vorschau = spielfenster.getVorschau();
-        this.tetrisKeyListener = tetrisKeyListener;
-
-        /* Das koennte man mit einem Oberserver viel schoener loesen */
-        tetrisKeyListener.setSpiel(this);
 
         spielfeld.setSpiel(this);
 
@@ -60,6 +54,22 @@ public class Spiel implements Runnable {
         highscoreLabel = spielfenster.getHighscoreLabel();
 
         spielLaeuft = true;
+    }
+
+    public void togglePause() {
+        isPause = !isPause;
+    }
+
+    public boolean isPause() {
+        return isPause;
+    }
+
+    public boolean isBeschleunigterFall() {
+        return isBeschleunigterFall;
+    }
+
+    public void setBeschleunigterFall(boolean isBeschleunigterFall) {
+        this.isBeschleunigterFall = isBeschleunigterFall;
     }
 
     @Override
@@ -132,7 +142,7 @@ public class Spiel implements Runnable {
 
     public void erhoehePunkte() {
 
-        if (tetrisKeyListener.isBeschleunigterFall())
+        if (isBeschleunigterFall())
             punkte += level * 3 + 21;
         else
             punkte += level * 3 + 3;
@@ -205,14 +215,6 @@ public class Spiel implements Runnable {
             Logger.getGlobal().log(Level.WARNING, "Konnte Highscore nicht lesen! " + e.getMessage(), e);
             e.printStackTrace();
         }
-    }
-
-    public void togglePause() {
-        isPause = !isPause;
-    }
-
-    public boolean isPause() {
-        return isPause;
     }
 
     /**

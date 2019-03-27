@@ -10,7 +10,6 @@ public class TetrisKeyListener implements KeyListener {
 
     private Spielfeld spielfeld;
     private Spiel     spiel;
-    private boolean   isBeschleunigterFall;
 
     public TetrisKeyListener(Spielfeld spielfeld) {
         this.spielfeld = spielfeld;
@@ -58,7 +57,7 @@ public class TetrisKeyListener implements KeyListener {
                 if (spiel.isPause())
                     return;
 
-                isBeschleunigterFall = true;
+                spiel.setBeschleunigterFall(true);
                 spielfeld.aktualisieren();
                 break;
 
@@ -109,11 +108,6 @@ public class TetrisKeyListener implements KeyListener {
     public void keyReleased(KeyEvent e) {
 
         if (KeyEvent.VK_DOWN == e.getKeyCode())
-            isBeschleunigterFall = false;
-    }
-
-    // TODO das gehört ins Spiel, nicht in den Listener
-    public boolean isBeschleunigterFall() {
-        return isBeschleunigterFall;
+            spiel.setBeschleunigterFall(false);
     }
 }

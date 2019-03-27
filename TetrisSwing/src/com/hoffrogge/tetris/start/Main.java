@@ -49,7 +49,10 @@ public class Main {
          * nur dem Spielfenster Informationen geben, die das Spielfenster dann
          * darstellt.
          */
-        Spiel spiel = new Spiel(spielfenster, tetrominoFactory, tetrisKeyListener);
+        Spiel spiel = new Spiel(spielfenster, tetrominoFactory);
+
+        /* Das koennte man mit einem Oberserver viel schoener loesen */
+        tetrisKeyListener.setSpiel(spiel);
 
         spiel.starteSpiel();
     }
