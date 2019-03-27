@@ -51,7 +51,8 @@ public class Main {
         /*
          * Dieser Listener wird fuer die Steuerung des Spiels benoetigt (links,
          * rechts, runter, drehen, Pause). Er erkennt Tastatureingaben und
-         * reicht diese an das Spiel weiter.
+         * reicht diese an das Spiel weiter. Ohne den KeyListener läuft das
+         * Spiel, ohne das der Spieler etwas machen kann.
          */
         TetrisKeyListener tetrisKeyListener = new TetrisKeyListener(spiel);
 
