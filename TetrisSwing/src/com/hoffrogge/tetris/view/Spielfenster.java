@@ -21,12 +21,13 @@ public class Spielfenster extends JFrame {
 
     private JLabel    highscoreWertLabel;
 
-    public Spielfenster(Spielfeld spielfeld, TetrominoFactory tetrominoFactory, TetrisKeyListener tetrisKeyListener) {
+    public Spielfenster(Spielfeld spielfeld, Vorschau vorschau, TetrominoFactory tetrominoFactory) {
 
         this.spielfeld = spielfeld;
         getContentPane().add(spielfeld);
 
-        addKeyListener(tetrisKeyListener);
+        this.vorschau = vorschau;
+        getContentPane().add(vorschau);
 
         getContentPane().setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
 
@@ -38,12 +39,6 @@ public class Spielfenster extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         getContentPane().setLayout(null);
-
-        vorschau = new Vorschau(tetrominoFactory);
-        vorschau.setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
-        vorschau.setForeground(TetrisKonstanten.VORDERGRUND.konvertiereZuColor());
-        vorschau.setBounds(TetrisKonstanten.VORSCHAU_POS_X, TetrisKonstanten.VORSCHAU_POS_Y, TetrisKonstanten.VORSCHAU_BREITE, TetrisKonstanten.VORSCHAU_HOEHE);
-        getContentPane().add(vorschau);
 
         Font font = new Font("Arial Black", Font.BOLD, 16);
 

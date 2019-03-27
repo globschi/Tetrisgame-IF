@@ -7,6 +7,7 @@ import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 import com.hoffrogge.tetris.view.Spielfeld;
 import com.hoffrogge.tetris.view.Spielfenster;
 import com.hoffrogge.tetris.view.TetrisKeyListener;
+import com.hoffrogge.tetris.view.Vorschau;
 
 public class Main {
 
@@ -30,17 +31,20 @@ public class Main {
                 TetrisKonstanten.SPIELFELD_HOEHE);
 
         /*
-         * Dieser Listener wird fuer die Steuerung des Spiels benoetigt (links,
-         * rechts, runter, drehen, Pause)
+         * Die Vorschau zeigt den jeweils nächsten Spielstein an. Mehr kann sie
+         * nicht tun.
          */
-        TetrisKeyListener tetrisKeyListener = new TetrisKeyListener(spielfeld);
+        Vorschau vorschau = new Vorschau(tetrominoFactory);
+        vorschau.setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
+        vorschau.setForeground(TetrisKonstanten.VORDERGRUND.konvertiereZuColor());
+        vorschau.setBounds(TetrisKonstanten.VORSCHAU_POS_X, TetrisKonstanten.VORSCHAU_POS_Y, TetrisKonstanten.VORSCHAU_BREITE, TetrisKonstanten.VORSCHAU_HOEHE);
 
         /*
          * Das Spielfenster ist dafür zuständig, das Spiel anzuzeigen, die
          * Tetrisspielsteine, die Vorschau, Highscore. Das Spielfenster selbst
          * kann Spielsteine nicht beeinflussen, es stellt sie nur dar.
          */
-        Spielfenster spielfenster = new Spielfenster(spielfeld, tetrominoFactory, tetrisKeyListener);
+        Spielfenster spielfenster = new Spielfenster(spielfeld, vorschau, tetrominoFactory);
 
         /*
          * Das Spiel enthält alles an Logik, die es braucht, z. B. das Drehen
@@ -51,8 +55,13 @@ public class Main {
          */
         Spiel spiel = new Spiel(spielfenster, tetrominoFactory);
 
-        /* Das koennte man mit einem Oberserver viel schoener loesen */
-        tetrisKeyListener.setSpiel(spiel);
+        /*
+         * Dieser Listener wird fuer die Steuerung des Spiels benoetigt (links,
+         * rechts, runter, drehen, Pause)
+         */
+        TetrisKeyListener tetrisKeyListener = new TetrisKeyListener(spiel, spielfeld);
+
+        spielfenster.addKeyListener(tetrisKeyListener);
 
         spiel.starteSpiel();
     }

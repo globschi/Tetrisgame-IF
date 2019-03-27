@@ -11,12 +11,9 @@ public class TetrisKeyListener implements KeyListener {
     private Spielfeld spielfeld;
     private Spiel     spiel;
 
-    public TetrisKeyListener(Spielfeld spielfeld) {
-        this.spielfeld = spielfeld;
-    }
-
-    public void setSpiel(Spiel spiel) {
+    public TetrisKeyListener(Spiel spiel, Spielfeld spielfeld) {
         this.spiel = spiel;
+        this.spielfeld = spielfeld;
     }
 
     @Override
