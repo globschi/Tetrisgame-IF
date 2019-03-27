@@ -1,7 +1,6 @@
 package com.hoffrogge.tetris.start;
 
 import com.hoffrogge.tetris.logik.Spiel;
-import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.tetromino.StandardTetrominoFactory;
 import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 import com.hoffrogge.tetris.view.Spielfeld;
@@ -26,18 +25,12 @@ public class Main {
          * beeinflussen, es weiss nur, wo sie sind.
          */
         Spielfeld spielfeld = new Spielfeld(tetrominoFactory);
-        spielfeld.setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
-        spielfeld.setBounds(TetrisKonstanten.SPIELFELD_POS_X, TetrisKonstanten.SPIELFELD_POS_Y, TetrisKonstanten.SPIELFELD_BREITE,
-                TetrisKonstanten.SPIELFELD_HOEHE);
 
         /*
          * Die Vorschau zeigt den jeweils nächsten Spielstein an. Mehr kann sie
          * nicht tun.
          */
         Vorschau vorschau = new Vorschau(tetrominoFactory);
-        vorschau.setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
-        vorschau.setForeground(TetrisKonstanten.VORDERGRUND.konvertiereZuColor());
-        vorschau.setBounds(TetrisKonstanten.VORSCHAU_POS_X, TetrisKonstanten.VORSCHAU_POS_Y, TetrisKonstanten.VORSCHAU_BREITE, TetrisKonstanten.VORSCHAU_HOEHE);
 
         /*
          * Das Spielfenster ist dafür zuständig, das Spiel anzuzeigen, die

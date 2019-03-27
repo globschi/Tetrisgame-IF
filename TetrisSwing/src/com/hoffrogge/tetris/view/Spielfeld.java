@@ -28,11 +28,16 @@ public class Spielfeld extends Canvas {
     private List<TetrominoSpielstein>     gefalleneSteine;
     private Spiel                         spiel;
 
+    /* Konstruktor */
     public Spielfeld(TetrominoFactory tetrominoFactory) {
-        /* Konstruktor */
+
         this.tetrominoFactory = tetrominoFactory;
         gefalleneSteine = new CopyOnWriteArrayList<>();
         naechsterSpielsteinTyp = tetrominoFactory.erstelleZufaelligenTetrominoTyp();
+
+        setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
+        setBounds(TetrisKonstanten.SPIELFELD_POS_X, TetrisKonstanten.SPIELFELD_POS_Y, TetrisKonstanten.SPIELFELD_BREITE,
+                TetrisKonstanten.SPIELFELD_HOEHE);
     }
 
     public TetrominoSpielstein getFallenderSpielstein() {

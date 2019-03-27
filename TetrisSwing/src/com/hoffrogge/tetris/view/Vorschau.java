@@ -18,7 +18,12 @@ public class Vorschau extends Canvas {
     private TetrominoFactory   tetrominoFactory;
 
     public Vorschau(TetrominoFactory tetrominoFactory) {
+
         this.tetrominoFactory = tetrominoFactory;
+
+        setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
+        setForeground(TetrisKonstanten.VORDERGRUND.konvertiereZuColor());
+        setBounds(TetrisKonstanten.VORSCHAU_POS_X, TetrisKonstanten.VORSCHAU_POS_Y, TetrisKonstanten.VORSCHAU_BREITE, TetrisKonstanten.VORSCHAU_HOEHE);
     }
 
     public void aktualisieren(TetrominoTyp tetrominoTyp) {
