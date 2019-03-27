@@ -6,23 +6,23 @@ public class Punkt {
     private int y;
 
     public Punkt(int x, int y) {
-	this.x = x;
-	this.y = y;
+        this.x = x;
+        this.y = y;
     }
 
     public int getX() {
-	return x;
+        return x;
     }
 
     public void setX(int x) {
-	this.x = x;
+        this.x = x;
     }
 
     public int getY() {
-	return y;
+        return y;
     }
 
     public void setY(int y) {
-	this.y = y;
+        this.y = y;
     }
 }

@@ -9,110 +9,110 @@ import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 public class TetrisKeyListener implements KeyListener {
 
     private Spielfeld spielfeld;
-    private Spiel spiel;
-    private boolean isBeschleunigterFall;
+    private Spiel     spiel;
+    private boolean   isBeschleunigterFall;
 
     public TetrisKeyListener(Spielfeld spielfeld) {
-	this.spielfeld = spielfeld;
+        this.spielfeld = spielfeld;
     }
 
     public void setSpiel(Spiel spiel) {
-	this.spiel = spiel;
+        this.spiel = spiel;
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-	/* nichts zu tun */
+        /* nichts zu tun */
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
 
-	TetrominoSpielstein fallenderSpielstein = spielfeld.getFallenderSpielstein();
+        TetrominoSpielstein fallenderSpielstein = spielfeld.getFallenderSpielstein();
 
-	if (fallenderSpielstein == null)
-	    return;
+        if (fallenderSpielstein == null)
+            return;
 
-	int keyCode = e.getKeyCode();
+        int keyCode = e.getKeyCode();
 
-	switch (keyCode) {
+        switch (keyCode) {
 
-	    case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_LEFT:
 
-		if (spiel.isPause())
-		    return;
+                if (spiel.isPause())
+                    return;
 
-		fallenderSpielstein.bewegeNachLinks();
-		break;
+                fallenderSpielstein.bewegeNachLinks();
+                break;
 
-	    case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_RIGHT:
 
-		if (spiel.isPause())
-		    return;
+                if (spiel.isPause())
+                    return;
 
-		fallenderSpielstein.bewegeNachRechts();
-		break;
+                fallenderSpielstein.bewegeNachRechts();
+                break;
 
-	    case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_DOWN:
 
-		if (spiel.isPause())
-		    return;
+                if (spiel.isPause())
+                    return;
 
-		isBeschleunigterFall = true;
-		spielfeld.aktualisieren();
-		break;
+                isBeschleunigterFall = true;
+                spielfeld.aktualisieren();
+                break;
 
-	    case KeyEvent.VK_Q:
+            case KeyEvent.VK_Q:
 
-		if (spiel.isPause())
-		    return;
+                if (spiel.isPause())
+                    return;
 
-		/*
-		 * Spielstein drehen und pruefen, ob der gedrehte Spielstein Platz hat. Wenn
-		 * nein, zurueckdrehen.
-		 */
-		fallenderSpielstein.rotiereNachLinks();
+                /*
+                 * Spielstein drehen und pruefen, ob der gedrehte Spielstein
+                 * Platz hat. Wenn nein, zurueckdrehen.
+                 */
+                fallenderSpielstein.rotiereNachLinks();
 
-		if (!spiel.passtGedrehterSpielstein(fallenderSpielstein))
-		    fallenderSpielstein.rotiereNachRechts();
+                if (!spiel.passtGedrehterSpielstein(fallenderSpielstein))
+                    fallenderSpielstein.rotiereNachRechts();
 
-		break;
+                break;
 
-	    case KeyEvent.VK_E:
+            case KeyEvent.VK_E:
 
-		if (spiel.isPause())
-		    return;
+                if (spiel.isPause())
+                    return;
 
-		/*
-		 * Spielstein drehen und pruefen, ob der gedrehte Spielstein Platz hat. Wenn
-		 * nein, zurueckdrehen.
-		 */
-		fallenderSpielstein.rotiereNachRechts();
+                /*
+                 * Spielstein drehen und pruefen, ob der gedrehte Spielstein
+                 * Platz hat. Wenn nein, zurueckdrehen.
+                 */
+                fallenderSpielstein.rotiereNachRechts();
 
-		if (!spiel.passtGedrehterSpielstein(fallenderSpielstein))
-		    fallenderSpielstein.rotiereNachLinks();
+                if (!spiel.passtGedrehterSpielstein(fallenderSpielstein))
+                    fallenderSpielstein.rotiereNachLinks();
 
-		break;
+                break;
 
-	    case KeyEvent.VK_P:
-		spiel.togglePause();
-		break;
+            case KeyEvent.VK_P:
+                spiel.togglePause();
+                break;
 
-	    default:
-		break;
-	}
+            default:
+                break;
+        }
 
-	spielfeld.zeichnen();
+        spielfeld.zeichnen();
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
 
-	if (KeyEvent.VK_DOWN == e.getKeyCode())
-	    isBeschleunigterFall = false;
+        if (KeyEvent.VK_DOWN == e.getKeyCode())
+            isBeschleunigterFall = false;
     }
 
     public boolean isBeschleunigterFall() {
-	return isBeschleunigterFall;
+        return isBeschleunigterFall;
     }
 }

@@ -7,57 +7,57 @@ public class TetrominoLanger extends Tetromino {
     private int kantenLaengeViertelBlock;
 
     public TetrominoLanger() {
-	this(TetrisKonstanten.SPIELFELD_BREITE / 2, -TetrisKonstanten.BLOCK_BREITE * 4);
+        this(TetrisKonstanten.SPIELFELD_BREITE / 2, -TetrisKonstanten.BLOCK_BREITE * 4);
     }
 
     public TetrominoLanger(int x, int y) {
 
-	this.x = x;
-	this.y = y;
+        this.x = x;
+        this.y = y;
 
-	durchmesser = TetrisKonstanten.BLOCK_BREITE;
-	kantenLaengeViertelBlock = durchmesser;
+        durchmesser = TetrisKonstanten.BLOCK_BREITE;
+        kantenLaengeViertelBlock = durchmesser;
 
-	viertelBloecke.add(new ViertelBlock(x, y));
-	viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock));
-	viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock * 2));
-	viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock * 3));
+        viertelBloecke.add(new ViertelBlock(x, y));
+        viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock));
+        viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock * 2));
+        viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock * 3));
     }
 
     @Override
     public void rotiereNachLinks() {
 
-	if (viertelBloecke.size() != 4)
-	    throw new IllegalStateException("Der Tetromino hat keine vier Bloecke!");
+        if (viertelBloecke.size() != 4)
+            throw new IllegalStateException("Der Tetromino hat keine vier Bloecke!");
 
-	TetrominoSpielstein ersterBlock = viertelBloecke.get(0);
-	TetrominoSpielstein dritterBlock = viertelBloecke.get(2);
-	TetrominoSpielstein vierterBlock = viertelBloecke.get(3);
+        TetrominoSpielstein ersterBlock = viertelBloecke.get(0);
+        TetrominoSpielstein dritterBlock = viertelBloecke.get(2);
+        TetrominoSpielstein vierterBlock = viertelBloecke.get(3);
 
-	boolean senkrecht = ersterBlock.getX() == vierterBlock.getX();
+        boolean senkrecht = ersterBlock.getX() == vierterBlock.getX();
 
-	if (senkrecht) {
+        if (senkrecht) {
 
-	    ersterBlock.setX(ersterBlock.getX() - TetrisKonstanten.BLOCK_BREITE);
-	    ersterBlock.setY(ersterBlock.getY() + TetrisKonstanten.BLOCK_BREITE);
+            ersterBlock.setX(ersterBlock.getX() - TetrisKonstanten.BLOCK_BREITE);
+            ersterBlock.setY(ersterBlock.getY() + TetrisKonstanten.BLOCK_BREITE);
 
-	    dritterBlock.setX(dritterBlock.getX() + TetrisKonstanten.BLOCK_BREITE);
-	    dritterBlock.setY(dritterBlock.getY() - TetrisKonstanten.BLOCK_BREITE);
+            dritterBlock.setX(dritterBlock.getX() + TetrisKonstanten.BLOCK_BREITE);
+            dritterBlock.setY(dritterBlock.getY() - TetrisKonstanten.BLOCK_BREITE);
 
-	    vierterBlock.setX(vierterBlock.getX() + TetrisKonstanten.BLOCK_BREITE * 2);
-	    vierterBlock.setY(vierterBlock.getY() - TetrisKonstanten.BLOCK_BREITE * 2);
+            vierterBlock.setX(vierterBlock.getX() + TetrisKonstanten.BLOCK_BREITE * 2);
+            vierterBlock.setY(vierterBlock.getY() - TetrisKonstanten.BLOCK_BREITE * 2);
 
-	} else {
+        } else {
 
-	    ersterBlock.setX(ersterBlock.getX() + TetrisKonstanten.BLOCK_BREITE);
-	    ersterBlock.setY(ersterBlock.getY() - TetrisKonstanten.BLOCK_BREITE);
+            ersterBlock.setX(ersterBlock.getX() + TetrisKonstanten.BLOCK_BREITE);
+            ersterBlock.setY(ersterBlock.getY() - TetrisKonstanten.BLOCK_BREITE);
 
-	    dritterBlock.setX(dritterBlock.getX() - TetrisKonstanten.BLOCK_BREITE);
-	    dritterBlock.setY(dritterBlock.getY() + TetrisKonstanten.BLOCK_BREITE);
+            dritterBlock.setX(dritterBlock.getX() - TetrisKonstanten.BLOCK_BREITE);
+            dritterBlock.setY(dritterBlock.getY() + TetrisKonstanten.BLOCK_BREITE);
 
-	    vierterBlock.setX(vierterBlock.getX() - TetrisKonstanten.BLOCK_BREITE * 2);
-	    vierterBlock.setY(vierterBlock.getY() + TetrisKonstanten.BLOCK_BREITE * 2);
+            vierterBlock.setX(vierterBlock.getX() - TetrisKonstanten.BLOCK_BREITE * 2);
+            vierterBlock.setY(vierterBlock.getY() + TetrisKonstanten.BLOCK_BREITE * 2);
 
-	}
+        }
     }
 }

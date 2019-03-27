@@ -9,27 +9,29 @@ public class Main {
 
     public static void main(String[] args) {
 
-	/*
-	 * Diese Factory ist dafür zuständig, Spielsteine zu generieren. Mit deiner
-	 * eigenen Factory kannst du hier deine eigenen Spielsteine einbauen.
-	 */
-	TetrominoFactory tetrominoFactory = new StandardTetrominoFactory();
+        /*
+         * Diese Factory ist dafür zuständig, Spielsteine zu generieren. Mit
+         * deiner eigenen Factory kannst du hier deine eigenen Spielsteine
+         * einbauen.
+         */
+        TetrominoFactory tetrominoFactory = new StandardTetrominoFactory();
 
-	/*
-	 * Das Spielfenster ist dafür zuständig, das Spiel anzuzeigen, die
-	 * Tetrisspielsteine, die Vorschau, Highscore. Das Spielfenster selbst kann
-	 * Spielsteine nicht beeinflussen, es stellt sie nur dar.
-	 */
-	Spielfenster spielfenster = new Spielfenster(tetrominoFactory);
+        /*
+         * Das Spielfenster ist dafür zuständig, das Spiel anzuzeigen, die
+         * Tetrisspielsteine, die Vorschau, Highscore. Das Spielfenster selbst
+         * kann Spielsteine nicht beeinflussen, es stellt sie nur dar.
+         */
+        Spielfenster spielfenster = new Spielfenster(tetrominoFactory);
 
-	/*
-	 * Das Spiel enthält alles an Logik, die es braucht, z. B. das Drehen von
-	 * Spielsteinen oder die Berechnung von Punkten. Das Spiel kann nichts
-	 * darstellen, das ist Aufgabe des Spielfensters. Das Spiel kann nur dem
-	 * Spielfenster Informationen geben, die das Spielfenster dann darstellt.
-	 */
-	Spiel spiel = new Spiel(spielfenster, tetrominoFactory);
+        /*
+         * Das Spiel enthält alles an Logik, die es braucht, z. B. das Drehen
+         * von Spielsteinen oder die Berechnung von Punkten. Das Spiel kann
+         * nichts darstellen, das ist Aufgabe des Spielfensters. Das Spiel kann
+         * nur dem Spielfenster Informationen geben, die das Spielfenster dann
+         * darstellt.
+         */
+        Spiel spiel = new Spiel(spielfenster, tetrominoFactory);
 
-	spiel.starteSpiel();
+        spiel.starteSpiel();
     }
 }

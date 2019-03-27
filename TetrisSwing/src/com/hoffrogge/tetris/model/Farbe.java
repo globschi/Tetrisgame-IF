@@ -9,36 +9,36 @@ public class Farbe {
     int blau;
 
     public Farbe(int rot, int gelb, int blau) {
-	this.rot = rot;
-	this.gelb = gelb;
-	this.blau = blau;
+        this.rot = rot;
+        this.gelb = gelb;
+        this.blau = blau;
     }
 
     public int getRot() {
-	return rot;
+        return rot;
     }
 
     public void setRot(int rot) {
-	this.rot = rot;
+        this.rot = rot;
     }
 
     public int getGelb() {
-	return gelb;
+        return gelb;
     }
 
     public void setGelb(int gelb) {
-	this.gelb = gelb;
+        this.gelb = gelb;
     }
 
     public int getBlau() {
-	return blau;
+        return blau;
     }
 
     public void setBlau(int blau) {
-	this.blau = blau;
+        this.blau = blau;
     }
 
     public Color konvertiereZuColor() {
-	return new Color(rot, gelb, blau);
+        return new Color(rot, gelb, blau);
     }
 }
