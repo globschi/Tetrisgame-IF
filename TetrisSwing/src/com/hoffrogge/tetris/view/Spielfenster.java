@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import com.hoffrogge.tetris.model.TetrisKonstanten;
-import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 
 @SuppressWarnings("serial")
 public class Spielfenster extends JFrame {
@@ -21,7 +20,7 @@ public class Spielfenster extends JFrame {
 
     private JLabel    highscoreWertLabel;
 
-    public Spielfenster(Spielfeld spielfeld, Vorschau vorschau, TetrominoFactory tetrominoFactory) {
+    public Spielfenster(Spielfeld spielfeld, Vorschau vorschau) {
 
         this.spielfeld = spielfeld;
         getContentPane().add(spielfeld);

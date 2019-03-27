@@ -44,7 +44,7 @@ public class Main {
          * Tetrisspielsteine, die Vorschau, Highscore. Das Spielfenster selbst
          * kann Spielsteine nicht beeinflussen, es stellt sie nur dar.
          */
-        Spielfenster spielfenster = new Spielfenster(spielfeld, vorschau, tetrominoFactory);
+        Spielfenster spielfenster = new Spielfenster(spielfeld, vorschau);
 
         /*
          * Das Spiel enthält alles an Logik, die es braucht, z. B. das Drehen
