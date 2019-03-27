@@ -12,20 +12,16 @@ import com.hoffrogge.tetris.model.TetrisKonstanten;
 @SuppressWarnings("serial")
 public class Spielfenster extends JFrame {
 
-    private Spielfeld spielfeld;
-    private Vorschau  vorschau;
-    private JLabel    levelWertLabel;
-    private JLabel    reihenWertLabel;
-    private JLabel    punkteWertLabel;
+    private JLabel levelWertLabel;
+    private JLabel reihenWertLabel;
+    private JLabel punkteWertLabel;
 
-    private JLabel    highscoreWertLabel;
+    private JLabel highscoreWertLabel;
 
     public Spielfenster(Spielfeld spielfeld, Vorschau vorschau) {
 
-        this.spielfeld = spielfeld;
         getContentPane().add(spielfeld);
 
-        this.vorschau = vorschau;
         getContentPane().add(vorschau);
 
         getContentPane().setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
@@ -121,27 +117,19 @@ public class Spielfenster extends JFrame {
         vorschau.createBufferStrategy(2);
     }
 
-    public Spielfeld getSpielfeld() {
-        return spielfeld;
+    public void setLevel(String level) {
+        levelWertLabel.setText(level);
     }
 
-    public Vorschau getVorschau() {
-        return vorschau;
+    public void setPunkte(String punkte) {
+        punkteWertLabel.setText(punkte);
     }
 
-    public JLabel getLevelWertLabel() {
-        return levelWertLabel;
+    public void setReihen(String reihen) {
+        reihenWertLabel.setText(reihen);
     }
 
-    public JLabel getReihenWertLabel() {
-        return reihenWertLabel;
-    }
-
-    public JLabel getPunkteWertLabel() {
-        return punkteWertLabel;
-    }
-
-    public JLabel getHighscoreLabel() {
-        return highscoreWertLabel;
+    public void setHighscore(String highscore) {
+        highscoreWertLabel.setText(highscore);
     }
 }

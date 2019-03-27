@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JLabel;
-
 import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.TetrisMusikSpieler;
 import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
@@ -22,36 +20,28 @@ import com.hoffrogge.tetris.view.Vorschau;
 
 public class Spiel implements Runnable {
 
-    private Spielfeld spielfeld;
-    private Vorschau  vorschau;
+    private Spielfeld    spielfeld;
+    private Vorschau     vorschau;
+    private Spielfenster spielfenster;
 
-    private boolean   spielLaeuft;
-    private Thread    spielThread;
-    private Thread    soundThread;
+    private boolean      spielLaeuft;
+    private Thread       spielThread;
+    private Thread       soundThread;
 
-    private JLabel    punkteWertLabel;
-    private JLabel    levelWertLabel;
-    private JLabel    reihenWertLabel;
-    private JLabel    highscoreLabel;
+    private int          level     = 1;
+    private int          punkte    = 0;
+    private int          highscore = 0;
+    private int          reihen    = 0;
+    private boolean      isPause;
+    private boolean      isBeschleunigterFall;
 
-    private int       level     = 1;
-    private int       punkte    = 0;
-    private int       highscore = 0;
-    private int       reihen    = 0;
-    private boolean   isPause;
-    private boolean   isBeschleunigterFall;
+    public Spiel(TetrominoFactory tetrominoFactory, Spielfeld spielfeld, Spielfenster spielfenster, Vorschau vorschau) {
 
-    public Spiel(Spielfenster spielfenster, TetrominoFactory tetrominoFactory) {
-
-        spielfeld = spielfenster.getSpielfeld();
-        vorschau = spielfenster.getVorschau();
+        this.spielfeld = spielfeld;
+        this.spielfenster = spielfenster;
+        this.vorschau = vorschau;
 
         spielfeld.setSpiel(this);
-
-        punkteWertLabel = spielfenster.getPunkteWertLabel();
-        levelWertLabel = spielfenster.getLevelWertLabel();
-        reihenWertLabel = spielfenster.getReihenWertLabel();
-        highscoreLabel = spielfenster.getHighscoreLabel();
 
         spielLaeuft = true;
     }
@@ -162,12 +152,12 @@ public class Spiel implements Runnable {
 
     private void punkteUndLevelUndReihenAktualisieren() {
 
-        levelWertLabel.setText(String.valueOf(level));
-        punkteWertLabel.setText(String.valueOf(punkte));
-        reihenWertLabel.setText(String.valueOf(reihen));
+        spielfenster.setLevel(String.valueOf(level));
+        spielfenster.setPunkte(String.valueOf(punkte));
+        spielfenster.setReihen(String.valueOf(reihen));
 
         highscore = Math.max(punkte, highscore);
-        highscoreLabel.setText(String.valueOf(highscore));
+        spielfenster.setHighscore(String.valueOf(highscore));
     }
 
     private void highscoreSpeichern() {

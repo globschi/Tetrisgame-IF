@@ -53,7 +53,7 @@ public class Main {
          * nur dem Spielfenster Informationen geben, die das Spielfenster dann
          * darstellt.
          */
-        Spiel spiel = new Spiel(spielfenster, tetrominoFactory);
+        Spiel spiel = new Spiel(tetrominoFactory, spielfeld, spielfenster, vorschau);
 
         /*
          * Dieser Listener wird fuer die Steuerung des Spiels benoetigt (links,
