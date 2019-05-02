@@ -10,11 +10,11 @@ import com.hoffrogge.tetris.model.TetrisKonstanten;
 
 public abstract class Tetromino implements TetrominoSpielstein {
 
-    int                                 durchmesser;
-    int                                 x;
-    int                                 y;
+    private Farbe                       linienFarbe;
 
-    Farbe                               linienFarbe;
+    protected int                       durchmesser;
+    protected int                       x;
+    protected int                       y;
 
     protected List<TetrominoSpielstein> viertelBloecke = new ArrayList<>(4);
 
@@ -340,9 +340,6 @@ public abstract class Tetromino implements TetrominoSpielstein {
          * Pendant im anderen Tetromino gleicht.
          */
         List<TetrominoSpielstein> andereViertelBloecke = andererSpielstein.getViertelBloecke();
-
-        for (TetrominoSpielstein block : viertelBloecke)
-            block.setLinienFarbe(linienFarbe);
 
         /* Es muss jeweils genau vier geben! */
         if (viertelBloecke.size() != 4 || andereViertelBloecke.size() != 4)
