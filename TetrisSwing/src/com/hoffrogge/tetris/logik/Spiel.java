@@ -7,11 +7,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.hoffrogge.tetris.model.Farbe;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.TetrisMusikSpieler;
 import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
@@ -260,5 +266,50 @@ public class Spiel implements Runnable {
 
     public List<TetrominoSpielstein> getGefalleneSteine() {
         return gefalleneSteine;
+    }
+
+    public void loescheVolleReihen() {
+
+        Collections.sort(getGefalleneSteine());
+
+        Map<Integer, List<TetrominoSpielstein>> bloeckeProReihe = new HashMap<>();
+
+        for (TetrominoSpielstein block : getGefalleneSteine()) {
+
+            List<TetrominoSpielstein> blockListe = bloeckeProReihe.get(block.getY());
+
+            if (blockListe == null)
+                blockListe = new ArrayList<>();
+
+            blockListe.add(block);
+
+            bloeckeProReihe.put(block.getY(), blockListe);
+        }
+
+        for (Entry<Integer, List<TetrominoSpielstein>> reihe : bloeckeProReihe.entrySet()) {
+
+            List<TetrominoSpielstein> blockListe = reihe.getValue();
+
+            if (blockListe.size() == TetrisKonstanten.SPIELFELD_BREITE / TetrisKonstanten.BLOCK_BREITE)
+                loescheReihe(blockListe);
+        }
+    }
+
+    private void loescheReihe(List<TetrominoSpielstein> blockListe) {
+
+        int hoehe = 0;
+
+        for (TetrominoSpielstein block : blockListe) {
+
+            block.setFuellFarbe(new Farbe(255, 60, 255));
+            getGefalleneSteine().remove(block);
+            hoehe = block.getY();
+        }
+
+        for (TetrominoSpielstein block : getGefalleneSteine())
+            if (block.getY() < hoehe)
+                block.bewegeNachUnten();
+
+        erhoeheReihen();
     }
 }

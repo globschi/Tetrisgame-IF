@@ -3,15 +3,9 @@ package com.hoffrogge.tetris.view;
 import java.awt.Canvas;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import com.hoffrogge.tetris.logik.Spiel;
-import com.hoffrogge.tetris.model.Farbe;
 import com.hoffrogge.tetris.model.GeometrischeFigur;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
@@ -36,7 +30,7 @@ public class Spielfeld extends Canvas {
 
     public void aktualisieren() {
 
-        loescheVolleReihen();
+        spiel.loescheVolleReihen();
 
         TetrominoSpielstein fallenderSpielstein = spiel.getFallenderSpielstein();
 
@@ -125,50 +119,5 @@ public class Spielfeld extends Canvas {
                 return true;
 
         return false;
-    }
-
-    private void loescheVolleReihen() {
-
-        Collections.sort(spiel.getGefalleneSteine());
-
-        Map<Integer, List<TetrominoSpielstein>> bloeckeProReihe = new HashMap<>();
-
-        for (TetrominoSpielstein block : spiel.getGefalleneSteine()) {
-
-            List<TetrominoSpielstein> blockListe = bloeckeProReihe.get(block.getY());
-
-            if (blockListe == null)
-                blockListe = new ArrayList<>();
-
-            blockListe.add(block);
-
-            bloeckeProReihe.put(block.getY(), blockListe);
-        }
-
-        for (Entry<Integer, List<TetrominoSpielstein>> reihe : bloeckeProReihe.entrySet()) {
-
-            List<TetrominoSpielstein> blockListe = reihe.getValue();
-
-            if (blockListe.size() == TetrisKonstanten.SPIELFELD_BREITE / TetrisKonstanten.BLOCK_BREITE)
-                loescheReihe(blockListe);
-        }
-    }
-
-    private void loescheReihe(List<TetrominoSpielstein> blockListe) {
-
-        int hoehe = 0;
-
-        for (TetrominoSpielstein block : blockListe) {
-
-            block.setFuellFarbe(new Farbe(255, 60, 255));
-            spiel.getGefalleneSteine().remove(block);
-            hoehe = block.getY();
-        }
-
-        for (TetrominoSpielstein block : spiel.getGefalleneSteine())
-            if (block.getY() < hoehe)
-                block.bewegeNachUnten();
-
-        spiel.erhoeheReihen();
     }
 }
