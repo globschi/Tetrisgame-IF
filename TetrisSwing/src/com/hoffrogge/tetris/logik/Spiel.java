@@ -90,7 +90,7 @@ public class Spiel implements Runnable {
 
             if (!isPause()) {
 
-                spielfeld.aktualisieren();
+                aktualisieren();
                 vorschau.aktualisieren(naechsterSpielsteinTyp);
             }
 
@@ -240,7 +240,7 @@ public class Spiel implements Runnable {
     }
 
     public void aktualisiereSpielfeld() {
-        spielfeld.aktualisieren();
+        aktualisieren();
     }
 
     public void zeichneSpielfeld() {
@@ -323,5 +323,29 @@ public class Spiel implements Runnable {
                 return true;
 
         return false;
+    }
+
+    private void aktualisieren() {
+
+        loescheVolleReihen();
+
+        TetrominoSpielstein fallenderSpielstein = getFallenderSpielstein();
+
+        if (fallenderSpielstein != null) {
+
+            fallenderSpielstein.bewegeNachUnten();
+
+            if (hatFallenderSteinBodenErreicht() || faelltFallenderSteinAufAnderenStein()) {
+
+                List<TetrominoSpielstein> viertelBloecke = fallenderSpielstein.getViertelBloecke();
+
+                if (viertelBloecke != null)
+                    getGefalleneSteine().addAll(viertelBloecke);
+
+                bestimmeNaechstenFallendenSpielstein();
+
+                erhoehePunkte();
+            }
+        }
     }
 }

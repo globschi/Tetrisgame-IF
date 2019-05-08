@@ -3,7 +3,6 @@ package com.hoffrogge.tetris.view;
 import java.awt.Canvas;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.List;
 
 import com.hoffrogge.tetris.logik.Spiel;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
@@ -25,30 +24,6 @@ public class Spielfeld extends Canvas {
 
     public void setSpiel(Spiel spiel) {
         this.spiel = spiel;
-    }
-
-    public void aktualisieren() {
-
-        spiel.loescheVolleReihen();
-
-        TetrominoSpielstein fallenderSpielstein = spiel.getFallenderSpielstein();
-
-        if (fallenderSpielstein != null) {
-
-            fallenderSpielstein.bewegeNachUnten();
-
-            if (spiel.hatFallenderSteinBodenErreicht() || spiel.faelltFallenderSteinAufAnderenStein()) {
-
-                List<TetrominoSpielstein> viertelBloecke = fallenderSpielstein.getViertelBloecke();
-
-                if (viertelBloecke != null)
-                    spiel.getGefalleneSteine().addAll(viertelBloecke);
-
-                spiel.bestimmeNaechstenFallendenSpielstein();
-
-                spiel.erhoehePunkte();
-            }
-        }
     }
 
     public void zeichnen() {
