@@ -14,36 +14,45 @@ import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.TetrisMusikSpieler;
 import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
+import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
 import com.hoffrogge.tetris.view.Spielfeld;
 import com.hoffrogge.tetris.view.Spielfenster;
 import com.hoffrogge.tetris.view.Vorschau;
 
 public class Spiel implements Runnable {
 
-    private Spielfeld    spielfeld;
-    private Vorschau     vorschau;
-    private Spielfenster spielfenster;
+    private Spielfeld           spielfeld;
+    private Vorschau            vorschau;
+    private Spielfenster        spielfenster;
 
-    private boolean      spielLaeuft;
-    private Thread       spielThread;
-    private Thread       soundThread;
+    private boolean             spielLaeuft;
+    private Thread              spielThread;
+    private Thread              soundThread;
 
-    private int          level     = 1;
-    private int          punkte    = 0;
-    private int          highscore = 0;
-    private int          reihen    = 0;
-    private boolean      isPause;
-    private boolean      isBeschleunigterFall;
+    private int                 level     = 1;
+    private int                 punkte    = 0;
+    private int                 highscore = 0;
+    private int                 reihen    = 0;
+    private boolean             isPause;
+    private boolean             isBeschleunigterFall;
+
+    private TetrominoFactory    tetrominoFactory;
+    private TetrominoTyp        naechsterSpielsteinTyp;
+    private TetrominoSpielstein fallenderSpielstein;
 
     public Spiel(TetrominoFactory tetrominoFactory, Spielfeld spielfeld, Spielfenster spielfenster, Vorschau vorschau) {
 
         this.spielfeld = spielfeld;
         this.spielfenster = spielfenster;
         this.vorschau = vorschau;
+        this.tetrominoFactory = tetrominoFactory;
+
+        this.naechsterSpielsteinTyp = tetrominoFactory.erstelleZufaelligenTetrominoTyp();
+        this.fallenderSpielstein = neuerZufaelligerSpielstein();
 
         spielfeld.setSpiel(this);
 
-        spielLaeuft = true;
+        this.spielLaeuft = true;
     }
 
     public void togglePause() {
@@ -72,7 +81,7 @@ public class Spiel implements Runnable {
             if (!isPause()) {
 
                 spielfeld.aktualisieren();
-                vorschau.aktualisieren(spielfeld.getNaechsterSpielsteinTyp());
+                vorschau.aktualisieren(naechsterSpielsteinTyp);
             }
 
             spielfeld.zeichnen();
@@ -217,7 +226,7 @@ public class Spiel implements Runnable {
     }
 
     public TetrominoSpielstein getFallenderSpielstein() {
-        return spielfeld.getFallenderSpielstein();
+        return fallenderSpielstein;
     }
 
     public void aktualisiereSpielfeld() {
@@ -226,5 +235,18 @@ public class Spiel implements Runnable {
 
     public void zeichneSpielfeld() {
         spielfeld.zeichnen();
+    }
+
+    private TetrominoSpielstein neuerZufaelligerSpielstein() {
+
+        TetrominoSpielstein tetromino = tetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp);
+
+        naechsterSpielsteinTyp = tetrominoFactory.erstelleZufaelligenTetrominoTyp();
+
+        return tetromino;
+    }
+
+    public void bestimmeNaechstenFallendenSpielstein() {
+        fallenderSpielstein = neuerZufaelligerSpielstein();
     }
 }
