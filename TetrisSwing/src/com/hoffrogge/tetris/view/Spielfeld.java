@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.hoffrogge.tetris.logik.Spiel;
 import com.hoffrogge.tetris.model.Farbe;
@@ -21,13 +20,10 @@ import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 @SuppressWarnings("serial")
 public class Spielfeld extends Canvas {
 
-    private List<TetrominoSpielstein> gefalleneSteine;
-    private Spiel                     spiel;
+    private Spiel spiel;
 
     /* Konstruktor */
     public Spielfeld(TetrominoFactory tetrominoFactory) {
-
-        gefalleneSteine = new CopyOnWriteArrayList<>();
 
         setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
         setBounds(TetrisKonstanten.SPIELFELD_POS_X, TetrisKonstanten.SPIELFELD_POS_Y, TetrisKonstanten.SPIELFELD_BREITE,
@@ -48,12 +44,12 @@ public class Spielfeld extends Canvas {
 
             fallenderSpielstein.bewegeNachUnten();
 
-            if (hatFallenderSteinBodenErreicht() || faelltFallenderSteinAufAnderenStein()) {
+            if (spiel.hatFallenderSteinBodenErreicht() || faelltFallenderSteinAufAnderenStein()) {
 
                 List<TetrominoSpielstein> viertelBloecke = fallenderSpielstein.getViertelBloecke();
 
                 if (viertelBloecke != null)
-                    gefalleneSteine.addAll(viertelBloecke);
+                    spiel.getGefalleneSteine().addAll(viertelBloecke);
 
                 spiel.bestimmeNaechstenFallendenSpielstein();
 
@@ -79,7 +75,7 @@ public class Spielfeld extends Canvas {
                 if (fallenderSpielstein != null)
                     fallenderSpielstein.zeichnen(g);
 
-                for (GeometrischeFigur gefallenerStein : gefalleneSteine)
+                for (GeometrischeFigur gefallenerStein : spiel.getGefalleneSteine())
                     gefallenerStein.zeichnen(g);
 
             } else
@@ -95,7 +91,7 @@ public class Spielfeld extends Canvas {
 
     public boolean istSpielfeldVoll() {
 
-        for (TetrominoSpielstein gefallenerStein : gefalleneSteine)
+        for (TetrominoSpielstein gefallenerStein : spiel.getGefalleneSteine())
             if (gefallenerStein.getHoechstesY() <= 0)
                 return true;
 
@@ -119,16 +115,12 @@ public class Spielfeld extends Canvas {
         g.drawString("Pause", TetrisKonstanten.SPIELFELD_BREITE / 2 - TetrisKonstanten.BLOCK_BREITE * 2, TetrisKonstanten.SPIELFELD_HOEHE / 2);
     }
 
-    private boolean hatFallenderSteinBodenErreicht() {
-        return spiel.getFallenderSpielstein().getTiefstesY() >= TetrisKonstanten.SPIELFELD_HOEHE;
-    }
-
     private boolean faelltFallenderSteinAufAnderenStein() {
 
-        if (gefalleneSteine.isEmpty())
+        if (spiel.getGefalleneSteine().isEmpty())
             return false;
 
-        for (TetrominoSpielstein block : gefalleneSteine)
+        for (TetrominoSpielstein block : spiel.getGefalleneSteine())
             if (spiel.getFallenderSpielstein().faelltAuf(block))
                 return true;
 
@@ -137,11 +129,11 @@ public class Spielfeld extends Canvas {
 
     private void loescheVolleReihen() {
 
-        Collections.sort(gefalleneSteine);
+        Collections.sort(spiel.getGefalleneSteine());
 
         Map<Integer, List<TetrominoSpielstein>> bloeckeProReihe = new HashMap<>();
 
-        for (TetrominoSpielstein block : gefalleneSteine) {
+        for (TetrominoSpielstein block : spiel.getGefalleneSteine()) {
 
             List<TetrominoSpielstein> blockListe = bloeckeProReihe.get(block.getY());
 
@@ -169,11 +161,11 @@ public class Spielfeld extends Canvas {
         for (TetrominoSpielstein block : blockListe) {
 
             block.setFuellFarbe(new Farbe(255, 60, 255));
-            gefalleneSteine.remove(block);
+            spiel.getGefalleneSteine().remove(block);
             hoehe = block.getY();
         }
 
-        for (TetrominoSpielstein block : gefalleneSteine)
+        for (TetrominoSpielstein block : spiel.getGefalleneSteine())
             if (block.getY() < hoehe)
                 block.bewegeNachUnten();
 

@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,24 +23,25 @@ import com.hoffrogge.tetris.view.Vorschau;
 
 public class Spiel implements Runnable {
 
-    private Spielfeld           spielfeld;
-    private Vorschau            vorschau;
-    private Spielfenster        spielfenster;
+    private Spielfeld                 spielfeld;
+    private Vorschau                  vorschau;
+    private Spielfenster              spielfenster;
 
-    private boolean             spielLaeuft;
-    private Thread              spielThread;
-    private Thread              soundThread;
+    private boolean                   spielLaeuft;
+    private Thread                    spielThread;
+    private Thread                    soundThread;
 
-    private int                 level     = 1;
-    private int                 punkte    = 0;
-    private int                 highscore = 0;
-    private int                 reihen    = 0;
-    private boolean             isPause;
-    private boolean             isBeschleunigterFall;
+    private int                       level     = 1;
+    private int                       punkte    = 0;
+    private int                       highscore = 0;
+    private int                       reihen    = 0;
+    private boolean                   isPause;
+    private boolean                   isBeschleunigterFall;
 
-    private TetrominoFactory    tetrominoFactory;
-    private TetrominoTyp        naechsterSpielsteinTyp;
-    private TetrominoSpielstein fallenderSpielstein;
+    private TetrominoFactory          tetrominoFactory;
+    private TetrominoTyp              naechsterSpielsteinTyp;
+    private TetrominoSpielstein       fallenderSpielstein;
+    private List<TetrominoSpielstein> gefalleneSteine;
 
     public Spiel(TetrominoFactory tetrominoFactory, Spielfeld spielfeld, Spielfenster spielfenster, Vorschau vorschau) {
 
@@ -49,6 +52,7 @@ public class Spiel implements Runnable {
 
         this.naechsterSpielsteinTyp = tetrominoFactory.erstelleZufaelligenTetrominoTyp();
         this.fallenderSpielstein = neuerZufaelligerSpielstein();
+        this.gefalleneSteine = new CopyOnWriteArrayList<>();
 
         spielfeld.setSpiel(this);
 
@@ -248,5 +252,13 @@ public class Spiel implements Runnable {
 
     public void bestimmeNaechstenFallendenSpielstein() {
         fallenderSpielstein = neuerZufaelligerSpielstein();
+    }
+
+    public boolean hatFallenderSteinBodenErreicht() {
+        return getFallenderSpielstein().getTiefstesY() >= TetrisKonstanten.SPIELFELD_HOEHE;
+    }
+
+    public List<TetrominoSpielstein> getGefalleneSteine() {
+        return gefalleneSteine;
     }
 }
