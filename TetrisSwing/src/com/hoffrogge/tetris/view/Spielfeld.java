@@ -60,7 +60,7 @@ public class Spielfeld extends Canvas {
     public boolean istSpielfeldVoll() {
 
         for (TetrominoSpielstein gefallenerStein : spiel.getGefalleneSteine())
-            if (gefallenerStein.getHoechstesY() <= 0)
+            if (gefallenerStein.getHoechstesY() <= TetrisKonstanten.SPIELFELD_X0)
                 return true;
 
         return false;
