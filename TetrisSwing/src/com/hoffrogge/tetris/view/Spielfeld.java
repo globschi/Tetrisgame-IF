@@ -37,7 +37,7 @@ public class Spielfeld extends Canvas {
 
             fallenderSpielstein.bewegeNachUnten();
 
-            if (spiel.hatFallenderSteinBodenErreicht() || faelltFallenderSteinAufAnderenStein()) {
+            if (spiel.hatFallenderSteinBodenErreicht() || spiel.faelltFallenderSteinAufAnderenStein()) {
 
                 List<TetrominoSpielstein> viertelBloecke = fallenderSpielstein.getViertelBloecke();
 
@@ -106,17 +106,5 @@ public class Spielfeld extends Canvas {
         g.setFont(font);
 
         g.drawString("Pause", TetrisKonstanten.SPIELFELD_BREITE / 2 - TetrisKonstanten.BLOCK_BREITE * 2, TetrisKonstanten.SPIELFELD_HOEHE / 2);
-    }
-
-    private boolean faelltFallenderSteinAufAnderenStein() {
-
-        if (spiel.getGefalleneSteine().isEmpty())
-            return false;
-
-        for (TetrominoSpielstein block : spiel.getGefalleneSteine())
-            if (spiel.getFallenderSpielstein().faelltAuf(block))
-                return true;
-
-        return false;
     }
 }

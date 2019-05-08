@@ -312,4 +312,16 @@ public class Spiel implements Runnable {
 
         erhoeheReihen();
     }
+
+    public boolean faelltFallenderSteinAufAnderenStein() {
+
+        if (getGefalleneSteine().isEmpty())
+            return false;
+
+        for (TetrominoSpielstein block : getGefalleneSteine())
+            if (getFallenderSpielstein().faelltAuf(block))
+                return true;
+
+        return false;
+    }
 }
