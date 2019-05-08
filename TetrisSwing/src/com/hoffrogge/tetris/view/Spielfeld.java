@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.util.List;
 
 import com.hoffrogge.tetris.logik.Spiel;
-import com.hoffrogge.tetris.model.GeometrischeFigur;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
@@ -69,7 +68,7 @@ public class Spielfeld extends Canvas {
                 if (fallenderSpielstein != null)
                     fallenderSpielstein.zeichnen(g);
 
-                for (GeometrischeFigur gefallenerStein : spiel.getGefalleneSteine())
+                for (TetrominoSpielstein gefallenerStein : spiel.getGefalleneSteine())
                     gefallenerStein.zeichnen(g);
 
             } else
