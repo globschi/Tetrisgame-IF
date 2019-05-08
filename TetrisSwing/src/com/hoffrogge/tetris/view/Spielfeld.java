@@ -64,7 +64,7 @@ public class Spielfeld extends Canvas {
         g.fillRect(TetrisKonstanten.SPIELFELD_X0, TetrisKonstanten.SPIELFELD_Y0, TetrisKonstanten.SPIELFELD_BREITE, TetrisKonstanten.SPIELFELD_HOEHE);
     }
 
-    private void zeichnePauseSchriftzug(Graphics g) {
+    private static void zeichnePauseSchriftzug(Graphics g) {
 
         Font font = new Font("Arial Black", Font.BOLD, TetrisKonstanten.BLOCK_BREITE);
 
