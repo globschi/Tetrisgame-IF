@@ -97,7 +97,7 @@ public class Spiel implements Runnable {
             spielfeld.zeichnen();
             vorschau.zeichnen();
 
-            if (spielfeld.istSpielfeldVoll()) {
+            if (istSpielfeldVoll()) {
 
                 beendeSpiel();
                 continue;
@@ -347,5 +347,14 @@ public class Spiel implements Runnable {
                 erhoehePunkte();
             }
         }
+    }
+
+    private boolean istSpielfeldVoll() {
+
+        for (TetrominoSpielstein gefallenerStein : getGefalleneSteine())
+            if (gefallenerStein.getHoechstesY() <= TetrisKonstanten.SPIELFELD_X0)
+                return true;
+
+        return false;
     }
 }

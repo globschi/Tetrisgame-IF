@@ -57,15 +57,6 @@ public class Spielfeld extends Canvas {
         getBufferStrategy().show();
     }
 
-    public boolean istSpielfeldVoll() {
-
-        for (TetrominoSpielstein gefallenerStein : spiel.getGefalleneSteine())
-            if (gefallenerStein.getHoechstesY() <= TetrisKonstanten.SPIELFELD_X0)
-                return true;
-
-        return false;
-    }
-
     private static void zeichneSpielfeld(Graphics g) {
 
         /* Hintergrund des Spielfeldes */
