@@ -349,7 +349,7 @@ public class Spiel implements Runnable {
         }
     }
 
-    private boolean istSpielfeldVoll() {
+    public boolean istSpielfeldVoll() {
 
         for (TetrominoSpielstein gefallenerStein : getGefalleneSteine())
             if (gefallenerStein.getHoechstesY() <= TetrisKonstanten.SPIELFELD_X0)
