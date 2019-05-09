@@ -33,7 +33,7 @@ public class TetrisKeyListener implements KeyListener {
 
             case KeyEvent.VK_LEFT:
 
-                if (spiel.isPause())
+                if (darfEingabeVerarbeitetWerden())
                     return;
 
                 fallenderSpielstein.bewegeNachLinks();
@@ -41,7 +41,7 @@ public class TetrisKeyListener implements KeyListener {
 
             case KeyEvent.VK_RIGHT:
 
-                if (spiel.isPause())
+                if (darfEingabeVerarbeitetWerden())
                     return;
 
                 fallenderSpielstein.bewegeNachRechts();
@@ -49,7 +49,7 @@ public class TetrisKeyListener implements KeyListener {
 
             case KeyEvent.VK_DOWN:
 
-                if (spiel.isPause())
+                if (darfEingabeVerarbeitetWerden())
                     return;
 
                 spiel.setBeschleunigterFall(true);
@@ -58,7 +58,7 @@ public class TetrisKeyListener implements KeyListener {
 
             case KeyEvent.VK_Q:
 
-                if (spiel.isPause())
+                if (darfEingabeVerarbeitetWerden())
                     return;
 
                 /*
@@ -74,7 +74,7 @@ public class TetrisKeyListener implements KeyListener {
 
             case KeyEvent.VK_E:
 
-                if (spiel.isPause())
+                if (darfEingabeVerarbeitetWerden())
                     return;
 
                 /*
@@ -108,5 +108,9 @@ public class TetrisKeyListener implements KeyListener {
 
         if (KeyEvent.VK_DOWN == e.getKeyCode())
             spiel.setBeschleunigterFall(false);
+    }
+
+    private boolean darfEingabeVerarbeitetWerden() {
+        return spiel.isPause() || spiel.istSpielfeldVoll();
     }
 }

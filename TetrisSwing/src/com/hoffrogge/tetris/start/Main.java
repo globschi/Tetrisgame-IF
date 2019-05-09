@@ -49,6 +49,7 @@ public class Main {
 		 */
 		Spiel spiel = new Spiel(tetrominoFactory, spielfeld, spielfenster, vorschau);
 
+<<<<<<< HEAD
 		/*
 		 * ==================================================================== Dieser
 		 * Listener wird fuer die Steuerung des Spiels benoetigt (links, rechts, runter,
@@ -58,6 +59,13 @@ public class Main {
 		 * ====================================================================
 		 */
 		KeyListener tetrisKeyListener = new KeyListener() {
+=======
+        /*
+         * Dies ist das Spielfeld. Es zeichnet das Spielfeld und die
+         * Spielsteine. Das Spielfeld kann Tetrisspielsteine nicht beeinflussen.
+         */
+        Spielfeld spielfeld = new Spielfeld(tetrominoFactory);
+>>>>>>> branch 'master' of https://github.com/HInformatikAG/TetrisSwing.git
 
 			/*
 			 * Dies ist eine anonyme Implementierung, die nur dafür da ist, damit der Code
@@ -65,13 +73,32 @@ public class Main {
 			 * eigenen KeyListener austauschen.
 			 */
 
+<<<<<<< HEAD
 			@Override
 			public void keyTyped(KeyEvent e) {
 			}
+=======
+        /*
+         * Das Spielfenster zeichnet das Spielfeld, die Vorschau, Highscore,
+         * Level, Punkte und Reihen. Das Spielfenster kann Spielsteine nicht
+         * beeinflussen.
+         */
+        Spielfenster spielfenster = new Spielfenster(spielfeld, vorschau);
+>>>>>>> branch 'master' of https://github.com/HInformatikAG/TetrisSwing.git
 
+<<<<<<< HEAD
 			@Override
 			public void keyReleased(KeyEvent e) {
 			}
+=======
+        /*
+         * Das Spiel enthält alles an Logik, die es braucht, z. B. das Drehen
+         * von Spielsteinen oder die Berechnung von Punkten. Das Spiel kann
+         * nichts darstellen, das ist Aufgabe des Spielfelds. Das Spiel kann nur
+         * dem Spielfeld Informationen geben, die das Spielfeld dann darstellt.
+         */
+        Spiel spiel = new Spiel(tetrominoFactory, spielfeld, spielfenster, vorschau);
+>>>>>>> branch 'master' of https://github.com/HInformatikAG/TetrisSwing.git
 
 			@Override
 			public void keyPressed(KeyEvent e) {
