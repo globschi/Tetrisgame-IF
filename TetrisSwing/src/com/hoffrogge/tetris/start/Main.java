@@ -24,9 +24,8 @@ public class Main {
         TetrominoFactory tetrominoFactory = new StandardTetrominoFactory();
 
         /*
-         * Dies ist das Spielfeld. Es zeichnet das Spielfeld und weiss, wo
-         * welche Spielsteine sind. Das Spielfeld kann Tetrisspielsteine nicht
-         * beeinflussen, es weiss nur, wo sie sind.
+         * Dies ist das Spielfeld. Es zeichnet das Spielfeld und die
+         * Spielsteine. Das Spielfeld kann Tetrisspielsteine nicht beeinflussen.
          */
         Spielfeld spielfeld = new Spielfeld(tetrominoFactory);
 
@@ -37,18 +36,17 @@ public class Main {
         Vorschau vorschau = new Vorschau(tetrominoFactory);
 
         /*
-         * Das Spielfenster ist dafür zuständig, das Spiel anzuzeigen, die
-         * Tetrisspielsteine, die Vorschau, Highscore. Das Spielfenster selbst
-         * kann Spielsteine nicht beeinflussen, es stellt sie nur dar.
+         * Das Spielfenster zeichnet das Spielfeld, die Vorschau, Highscore,
+         * Level, Punkte und Reihen. Das Spielfenster kann Spielsteine nicht
+         * beeinflussen.
          */
         Spielfenster spielfenster = new Spielfenster(spielfeld, vorschau);
 
         /*
          * Das Spiel enthält alles an Logik, die es braucht, z. B. das Drehen
          * von Spielsteinen oder die Berechnung von Punkten. Das Spiel kann
-         * nichts darstellen, das ist Aufgabe des Spielfensters. Das Spiel kann
-         * nur dem Spielfenster Informationen geben, die das Spielfenster dann
-         * darstellt.
+         * nichts darstellen, das ist Aufgabe des Spielfelds. Das Spiel kann nur
+         * dem Spielfeld Informationen geben, die das Spielfeld dann darstellt.
          */
         Spiel spiel = new Spiel(tetrominoFactory, spielfeld, spielfenster, vorschau);
 

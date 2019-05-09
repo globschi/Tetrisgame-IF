@@ -103,14 +103,14 @@ public class TetrisKeyListener implements KeyListener {
         spiel.zeichneSpielfeld();
     }
 
-    private boolean darfEingabeVerarbeitetWerden() {
-        return spiel.isPause() || spiel.istSpielfeldVoll();
-    }
-
     @Override
     public void keyReleased(KeyEvent e) {
 
         if (KeyEvent.VK_DOWN == e.getKeyCode())
             spiel.setBeschleunigterFall(false);
+    }
+
+    private boolean darfEingabeVerarbeitetWerden() {
+        return spiel.isPause() || spiel.istSpielfeldVoll();
     }
 }
