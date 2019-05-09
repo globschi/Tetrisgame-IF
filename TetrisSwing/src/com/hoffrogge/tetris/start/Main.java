@@ -1,13 +1,14 @@
 package com.hoffrogge.tetris.start;
 
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import com.hoffrogge.tetris.logik.Spiel;
-import com.hoffrogge.tetris.model.tetromino.StandardTetrominoFactory;
 import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
+import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
+import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
 import com.hoffrogge.tetris.view.Spielfeld;
 import com.hoffrogge.tetris.view.Spielfenster;
-import com.hoffrogge.tetris.view.TetrisKeyListener;
 import com.hoffrogge.tetris.view.Vorschau;
 
 public class Main {
@@ -21,7 +22,29 @@ public class Main {
          * einbauen.
          * ====================================================================
          */
-        TetrominoFactory tetrominoFactory = new StandardTetrominoFactory();
+        TetrominoFactory tetrominoFactory = new TetrominoFactory() {
+
+            /*
+             * Dies ist eine anonyme Implementierung, die nur dafür da ist,
+             * damit der Code compiliert und keine Fehler wirft. Du kannst sie
+             * entfernen und gegen deine eigene TetrominoFactory austauschen.
+             */
+
+            @Override
+            public TetrominoTyp erstelleZufaelligenTetrominoTyp() {
+                return null;
+            }
+
+            @Override
+            public TetrominoSpielstein erstelleTetromino(TetrominoTyp typ, int x, int y) {
+                return null;
+            }
+
+            @Override
+            public TetrominoSpielstein erstelleTetromino(TetrominoTyp tetrominoTyp) {
+                return null;
+            }
+        };
 
         /*
          * Dies ist das Spielfeld. Es zeichnet das Spielfeld und die
@@ -59,7 +82,26 @@ public class Main {
          * KeyListener einbauen.
          * ====================================================================
          */
-        KeyListener tetrisKeyListener = new TetrisKeyListener(spiel);
+        KeyListener tetrisKeyListener = new KeyListener() {
+
+            /*
+             * Dies ist eine anonyme Implementierung, die nur dafür da ist,
+             * damit der Code compiliert und keine Fehler wirft. Du kannst sie
+             * entfernen und gegen deinen eigenen KeyListener austauschen.
+             */
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+        };
 
         /*
          * Der KeyListener muss an einer Komponente hängen, die angezeigt wird,
