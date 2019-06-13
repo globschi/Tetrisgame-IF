@@ -24,8 +24,8 @@ public class ViertelBlock implements TetrominoSpielstein {
 
 		Random r = new Random();
 
-		fuellFarbe = new Farbe(r.nextInt(255), r.nextInt(255), r.nextInt(255));
-		linienFarbe = new Farbe(r.nextInt(255), r.nextInt(255), r.nextInt(255));
+		// fuellFarbe = new Farbe(r.nextInt(255), r.nextInt(255), r.nextInt(255));
+		linienFarbe = new Farbe(0, 0, 0);
 	}
 
 	public ViertelBlock(int x, int y, Farbe fuellFarbe) {
